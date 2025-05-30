@@ -3,85 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QUANTEC IMRT Dose Constraints</title>
+    <title>My Knowledge Base</title>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            margin: 0;
+            max-width: 1200px;
+            margin: 0 auto;
             padding: 20px;
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            color: #333;
         }
         
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
             background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            padding: 30px;
             backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.1);
         }
         
-        .header {
+        h1 {
+            color: #2c3e50;
             text-align: center;
             margin-bottom: 40px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 30px;
-            border-radius: 15px;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
-            background-size: 20px 20px;
-            animation: pulse 4s ease-in-out infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 1; }
-        }
-        
-        .header h1 {
-            margin: 0;
             font-size: 2.5em;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .header p {
-            margin: 10px 0 0 0;
-            opacity: 0.9;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .controls {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-            gap: 15px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
         
         .search-box {
-            flex: 1;
-            min-width: 250px;
-            padding: 12px 20px;
-            border: 2px solid #e0e6ed;
-            border-radius: 25px;
+            width: 100%;
+            padding: 15px;
             font-size: 16px;
+            border: 2px solid #e0e6ed;
+            border-radius: 10px;
+            margin-bottom: 30px;
             transition: border-color 0.3s;
         }
         
@@ -90,49 +47,73 @@
             border-color: #667eea;
         }
         
-        .control-buttons {
+        .category {
+            margin-bottom: 30px;
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            border-left: 5px solid #667eea;
+        }
+        
+        .category h2 {
+            color: #2c3e50;
+            margin-top: 0;
             display: flex;
+            align-items: center;
             gap: 10px;
         }
         
-        .btn {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            font-weight: 600;
+        .category-icon {
+            font-size: 1.5em;
+        }
+        
+        .topics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .topic-card {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            padding: 20px;
             transition: all 0.3s ease;
-            font-size: 14px;
+            cursor: pointer;
         }
         
-        .btn-primary {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
+        .topic-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.15);
+            border-color: #667eea;
         }
         
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        .topic-title {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 8px;
         }
         
-        .btn-secondary {
-            background: #f8f9fa;
+        .topic-desc {
             color: #6c757d;
-            border: 2px solid #dee2e6;
+            font-size: 0.9em;
+            line-height: 1.4;
         }
         
-        .btn-secondary:hover {
-            background: #e9ecef;
+        .topic-date {
+            color: #9ca3af;
+            font-size: 0.8em;
+            margin-top: 10px;
         }
         
         .stats {
             display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-bottom: 30px;
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-            padding: 20px;
+            justify-content: space-around;
+            background: linear-gradient(135deg, #f1f3f4, #e8eaed);
             border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
         }
         
         .stat {
@@ -149,666 +130,131 @@
             color: #6c757d;
             font-size: 0.9em;
         }
-        
-        .organs-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 20px;
-        }
-        
-        .organ-card {
-            background: white;
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-            border-left: 5px solid #667eea;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .organ-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-        }
-        
-        .organ-card.critical {
-            border-left-color: #dc3545;
-        }
-        
-        .organ-card.moderate {
-            border-left-color: #ffc107;
-        }
-        
-        .organ-card.parallel {
-            border-left-color: #28a745;
-        }
-        
-        .organ-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-        
-        .organ-name {
-            font-size: 1.4em;
-            font-weight: 700;
-            color: #2c3e50;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .organ-type {
-            padding: 4px 12px;
-            border-radius: 15px;
-            font-size: 0.8em;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-        
-        .organ-type.critical {
-            background: #ffe6e6;
-            color: #dc3545;
-        }
-        
-        .organ-type.moderate {
-            background: #fff3cd;
-            color: #856404;
-        }
-        
-        .organ-type.parallel {
-            background: #d4edda;
-            color: #155724;
-        }
-        
-        .toggle-btn {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 0.9em;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-        
-        .toggle-btn:hover {
-            transform: scale(1.05);
-        }
-        
-        .toggle-btn.showing {
-            background: linear-gradient(135deg, #28a745, #20c997);
-        }
-        
-        .constraints {
-            margin-top: 15px;
-            display: none;
-            animation: slideDown 0.3s ease-out;
-        }
-        
-        .constraints.visible {
-            display: block;
-        }
-        
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .constraint-item {
-            background: #f8f9fa;
-            padding: 15px;
-            margin: 10px 0;
-            border-radius: 10px;
-            border-left: 4px solid #667eea;
-        }
-        
-        .constraint-endpoint {
-            font-weight: 600;
-            color: #2c3e50;
-            margin-bottom: 5px;
-        }
-        
-        .constraint-dose {
-            font-size: 1.1em;
-            font-weight: 700;
-            color: #dc3545;
-            margin: 5px 0;
-        }
-        
-        .constraint-risk {
-            font-size: 0.9em;
-            color: #6c757d;
-        }
-        
-        .progress-bar {
-            width: 100%;
-            height: 8px;
-            background: #e9ecef;
-            border-radius: 4px;
-            margin: 20px 0;
-            overflow: hidden;
-        }
-        
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #667eea, #764ba2);
-            width: 0%;
-            transition: width 0.5s ease;
-        }
-        
-        .back-nav {
-            margin-bottom: 20px;
-        }
-        
-        .back-nav a {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            color: #667eea;
-            text-decoration: none;
-            font-weight: 600;
-            padding: 10px 20px;
-            background: white;
-            border-radius: 25px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            transition: all 0.3s;
-        }
-        
-        .back-nav a:hover {
-            transform: translateX(-5px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
-        }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="back-nav">
-            <a href="/index.html">← Back to Knowledge Base</a>
-        </div>
-        
-        <div class="header">
-            <h1>🏥 QUANTEC IMRT Dose Constraints</h1>
-            <p>Interactive study tool for medical physics examinations</p>
-        </div>
-        
-        <div class="controls">
-            <input type="text" class="search-box" placeholder="🔍 Search organs or endpoints..." id="searchBox">
-            <div class="control-buttons">
-                <button class="btn btn-primary" onclick="showAll()">Show All</button>
-                <button class="btn btn-secondary" onclick="hideAll()">Hide All</button>
-                <button class="btn btn-secondary" onclick="randomQuiz()">Random Quiz</button>
-            </div>
-        </div>
+        <h1>🧠 My Knowledge Base</h1>
         
         <div class="stats">
             <div class="stat">
-                <div class="stat-number" id="total-organs">16</div>
-                <div class="stat-label">Organs</div>
+                <div class="stat-number" id="total-articles">0</div>
+                <div class="stat-label">Articles</div>
             </div>
             <div class="stat">
-                <div class="stat-number" id="studied-count">0</div>
-                <div class="stat-label">Studied</div>
+                <div class="stat-number" id="total-categories">4</div>
+                <div class="stat-label">Categories</div>
             </div>
             <div class="stat">
-                <div class="stat-number" id="progress-percent">0%</div>
-                <div class="stat-label">Progress</div>
+                <div class="stat-number" id="last-updated">Today</div>
+                <div class="stat-label">Last Updated</div>
             </div>
         </div>
         
-        <div class="progress-bar">
-            <div class="progress-fill" id="progressFill"></div>
+        <input type="text" class="search-box" placeholder="🔍 Search your knowledge..." id="searchBox">
+        
+        <div class="category">
+            <h2><span class="category-icon">🧮</span> Mathematics & Statistics</h2>
+            <div class="topics">
+                <div class="topic-card" onclick="openTopic('math/probability-distributions.html')">
+                    <div class="topic-title">Probability Distributions</div>
+                    <div class="topic-desc">Interactive visualizations of normal, binomial, and Poisson distributions</div>
+                    <div class="topic-date">Added: May 30, 2025</div>
+                </div>
+                <!-- Add more math topics here -->
+            </div>
         </div>
         
-        <div class="organs-grid" id="organsGrid">
-            
-            <div class="organ-card critical" data-organ="brain">
-                <div class="organ-header">
-                    <div class="organ-name">
-                        🧠 Brain
-                        <span class="organ-type critical">Serial</span>
-                    </div>
-                    <button class="toggle-btn" onclick="toggleConstraints('brain')">Show Constraints</button>
+        <div class="category">
+            <h2><span class="category-icon">🏥</span> Medical Physics Examination</h2>
+            <div class="topics">
+                <div class="topic-card" onclick="openTopic('medical-physics/quantec-constraints.html')">
+                    <div class="topic-title">QUANTEC IMRT Dose Constraints</div>
+                    <div class="topic-desc">Interactive dose constraints for organs with memorization features</div>
+                    <div class="topic-date">Added: May 31, 2025</div>
                 </div>
-                <div class="constraints" id="brain-constraints">
-                    <div class="constraint-item">
-                        <div class="constraint-endpoint">Necrosis</div>
-                        <div class="constraint-dose">V60Gy < 5-10 cm³</div>
-                        <div class="constraint-risk">Risk of necrosis ~5-10%</div>
-                    </div>
-                    <div class="constraint-item">
-                        <div class="constraint-endpoint">Whole Brain</div>
-                        <div class="constraint-dose">Mean dose < 30 Gy</div>
-                        <div class="constraint-risk">Cognitive impairment risk</div>
-                    </div>
+                <div class="topic-card" onclick="openTopic('medical-physics/radiation-biology.html')">
+                    <div class="topic-title">Radiation Biology</div>
+                    <div class="topic-desc">Cell survival curves, fractionation, and radiobiological models</div>
+                    <div class="topic-date">Added: May 31, 2025</div>
                 </div>
-            </div>
-            
-            <div class="organ-card critical" data-organ="brainstem">
-                <div class="organ-header">
-                    <div class="organ-name">
-                        🧠 Brainstem
-                        <span class="organ-type critical">Serial</span>
-                    </div>
-                    <button class="toggle-btn" onclick="toggleConstraints('brainstem')">Show Constraints</button>
+                <div class="topic-card" onclick="openTopic('medical-physics/treatment-planning.html')">
+                    <div class="topic-title">Treatment Planning Systems</div>
+                    <div class="topic-desc">Algorithms, optimization, and plan evaluation</div>
+                    <div class="topic-date">Coming soon...</div>
                 </div>
-                <div class="constraints" id="brainstem-constraints">
-                    <div class="constraint-item">
-                        <div class="constraint-endpoint">Necrosis/Neuropathy</div>
-                        <div class="constraint-dose">Dmax < 54 Gy</div>
-                        <div class="constraint-risk">Risk ~5% at 54 Gy</div>
-                    </div>
-                    <div class="constraint-item">
-                        <div class="constraint-endpoint">Critical Volume</div>
-                        <div class="constraint-dose">V59Gy < 1-10 cm³</div>
-                        <div class="constraint-risk">Minimize high dose volume</div>
-                    </div>
+                <div class="topic-card" onclick="openTopic('medical-physics/qa-procedures.html')">
+                    <div class="topic-title">QA & Commissioning</div>
+                    <div class="topic-desc">Daily, monthly, and annual QA procedures</div>
+                    <div class="topic-date">Coming soon...</div>
                 </div>
             </div>
-            
-            <div class="organ-card critical" data-organ="spinal-cord">
-                <div class="organ-header">
-                    <div class="organ-name">
-                        🦴 Spinal Cord
-                        <span class="organ-type critical">Serial</span>
-                    </div>
-                    <button class="toggle-btn" onclick="toggleConstraints('spinal-cord')">Show Constraints</button>
+        </div>
+        
+        <div class="category">
+            <h2><span class="category-icon">⚗️</span> Physics & Engineering</h2>
+            <div class="topics">
+                <div class="topic-card" onclick="openTopic('physics/radiation-dose.html')">
+                    <div class="topic-title">Radiation Dose Calculations</div>
+                    <div class="topic-desc">Expected value, variance, and detector measurements</div>
+                    <div class="topic-date">Added: May 30, 2025</div>
                 </div>
-                <div class="constraints" id="spinal-cord-constraints">
-                    <div class="constraint-item">
-                        <div class="constraint-endpoint">Myelopathy</div>
-                        <div class="constraint-dose">Dmax < 50 Gy</div>
-                        <div class="constraint-risk">Risk <0.2% at 50 Gy</div>
-                    </div>
-                    <div class="constraint-item">
-                        <div class="constraint-endpoint">With Chemotherapy</div>
-                        <div class="constraint-dose">Dmax < 45 Gy</div>
-                        <div class="constraint-risk">Reduced tolerance with chemo</div>
-                    </div>
-                </div>
+                <!-- Add more physics topics here -->
             </div>
-            
-            <div class="organ-card moderate" data-organ="optic-pathway">
-                <div class="organ-header">
-                    <div class="organ-name">
-                        👁️ Optic Pathway
-                        <span class="organ-type moderate">Serial</span>
-                    </div>
-                    <button class="toggle-btn" onclick="toggleConstraints('optic-pathway')">Show Constraints</button>
+        </div>
+        
+        <div class="category">
+            <h2><span class="category-icon">💻</span> Programming & Tech</h2>
+            <div class="topics">
+                <div class="topic-card" onclick="openTopic('programming/data-visualization.html')">
+                    <div class="topic-title">Data Visualization Techniques</div>
+                    <div class="topic-desc">Interactive charts and graphs with D3.js and Plotly</div>
+                    <div class="topic-date">Coming soon...</div>
                 </div>
-                <div class="constraints" id="optic-pathway-constraints">
-                    <div class="constraint-item">
-                        <div class="constraint-endpoint">Optic Neuropathy</div>
-                        <div class="constraint-dose">Dmax < 55 Gy</div>
-                        <div class="constraint-risk">Risk ~3% at 55 Gy</div>
-                    </div>
-                    <div class="constraint-item">
-                        <div class="constraint-endpoint">Optic Chiasm</div>
-                        <div class="constraint-dose">Dmax < 54 Gy</div>
-                        <div class="constraint-risk">More sensitive than nerves</div>
-                    </div>
-                </div>
+                <!-- Add more programming topics here -->
             </div>
-            
-            <div class="organ-card parallel" data-organ="parotid">
-                <div class="organ-header">
-                    <div class="organ-name">
-                        💧 Parotid Glands
-                        <span class="organ-type parallel">Parallel</span>
-                    </div>
-                    <button class="toggle-btn" onclick="toggleConstraints('parotid')">Show Constraints</button>
+        </div>
+        
+        <div class="category">
+            <h2><span class="category-icon">🎯</span> General Knowledge</h2>
+            <div class="topics">
+                <div class="topic-card" onclick="openTopic('general/learning-systems.html')">
+                    <div class="topic-title">Knowledge Management Systems</div>
+                    <div class="topic-desc">Comparison of Obsidian, Notion, and GitHub Pages</div>
+                    <div class="topic-date">Added: May 30, 2025</div>
                 </div>
-                <div class="constraints" id="parotid-constraints">
-                    <div class="constraint-item">
-                        <div class="constraint-endpoint">Xerostomia (Grade 2+)</div>
-                        <div class="constraint-dose">Mean dose < 25-26 Gy</div>
-                        <div class="constraint-risk">~20% risk at mean 25 Gy</div>
-                    </div>
-                    <div class="constraint-item">
-                        <div class="constraint-endpoint">At least one gland</div>
-                        <div class="constraint-dose">Mean dose < 20 Gy</div>
-                        <div class="constraint-risk">Preserve one gland function</div>
-                    </div>
-                </div>
+                <!-- Add more general topics here -->
             </div>
-            
-            <div class="organ-card parallel" data-organ="lungs">
-                <div class="organ-header">
-                    <div class="organ-name">
-                        🫁 Lungs
-                        <span class="organ-type parallel">Parallel</span>
-                    </div>
-                    <button class="toggle-btn" onclick="toggleConstraints('lungs')">Show Constraints</button>
-                </div>
-                <div class="constraints" id="lungs-constraints">
-                    <div class="constraint-item">
-                        <div class="constraint-endpoint">Pneumonitis (Grade 2+)</div>
-                        <div class="constraint-dose">V20Gy < 30-35%</div>
-                        <div class="constraint-risk">~20% risk at V20 = 30%</div>
-                    </div>
-                    <div class="constraint-item">
-                        <div class="constraint-endpoint">Mean Lung Dose</div>
-                        <div class="constraint-dose">MLD < 20-23 Gy</div>
-                        <div class="constraint-risk">Alternative constraint</div>
-                    </div>
-                    <div class="constraint-item">
-                        <div class="constraint-endpoint">High Dose Volume</div>
-                        <div class="constraint-dose">V5Gy < 65%</div>
-                        <div class="constraint-risk">Low dose bath consideration</div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="organ-card critical" data-organ="heart">
-                <div class="organ-header">
-                    <div class="organ-name">
-                        ❤️ Heart
-                        <span class="organ-type critical">Mixed</span>
-                    </div>
-                    <button class="toggle-btn" onclick="toggleConstraints('heart')">Show Constraints</button>
-                </div>
-                <div class="constraints" id="heart-constraints">
-                    <div class="constraint-item">
-                        <div class="constraint-endpoint">Pericarditis</div>
-                        <div class="constraint-dose">V30Gy < 46%</div>
-                        <div class="constraint-risk">~15% risk</div>
-                    </div>
-                    <div class="constraint-item">
-                        <div class="constraint-endpoint">Whole Heart</div>
-                        <div class="constraint-dose">Mean dose < 26 Gy</div>
-                        <div class="constraint-risk">Long-term cardiac toxicity</div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="organ-card moderate" data-organ="esophagus">
-                <div class="organ-header">
-                    <div class="organ-name">
-                        🔽 Esophagus
-                        <span class="organ-type moderate">Serial</span>
-                    </div>
-                    <button class="toggle-btn" onclick="toggleConstraints('esophagus')">Show Constraints</button>
-                </div>
-                <div class="constraints" id="esophagus-constraints">
-                    <div class="constraint-item">
-                        <div class="constraint-endpoint">Acute Esophagitis (Grade 3+)</div>
-                        <div class="constraint-dose">V70Gy < 20%</div>
-                        <div class="constraint-risk">~18% risk</div>
-                    </div>
-                    <div class="constraint-item">
-                        <div class="constraint-endpoint">Mean Dose</div>
-                        <div class="constraint-dose">Mean dose < 34 Gy</div>
-                        <div class="constraint-risk">Alternative constraint</div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="organ-card parallel" data-organ="liver">
-                <div class="organ-header">
-                    <div class="organ-name">
-                        🫀 Liver
-                        <span class="organ-type parallel">Parallel</span>
-                    </div>
-                    <button class="toggle-btn" onclick="toggleConstraints('liver')">Show Constraints</button>
-                </div>
-                <div class="constraints" id="liver-constraints">
-                    <div class="constraint-item">
-                        <div class="constraint-endpoint">RILD (Normal liver)</div>
-                        <div class="constraint-dose">Mean dose < 30-32 Gy</div>
-                        <div class="constraint-risk">~5% risk RILD</div>
-                    </div>
-                    <div class="constraint-item">
-                        <div class="constraint-endpoint">Cirrhotic liver</div>
-                        <div class="constraint-dose">Mean dose < 28 Gy</div>
-                        <div class="constraint-risk">Reduced tolerance</div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="organ-card parallel" data-organ="kidney">
-                <div class="organ-header">
-                    <div class="organ-name">
-                        🫘 Kidneys
-                        <span class="organ-type parallel">Parallel</span>
-                    </div>
-                    <button class="toggle-btn" onclick="toggleConstraints('kidney')">Show Constraints</button>
-                </div>
-                <div class="constraints" id="kidney-constraints">
-                    <div class="constraint-item">
-                        <div class="constraint-endpoint">Bilateral Mean Dose</div>
-                        <div class="constraint-dose">Mean dose < 18-23 Gy</div>
-                        <div class="constraint-risk">~5% risk nephritis</div>
-                    </div>
-                    <div class="constraint-item">
-                        <div class="constraint-endpoint">Single Kidney</div>
-                        <div class="constraint-dose">V20Gy < 32%</div>
-                        <div class="constraint-risk">Functional preservation</div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="organ-card moderate" data-organ="rectum">
-                <div class="organ-header">
-                    <div class="organ-name">
-                        🔽 Rectum
-                        <span class="organ-type moderate">Serial</span>
-                    </div>
-                    <button class="toggle-btn" onclick="toggleConstraints('rectum')">Show Constraints</button>
-                </div>
-                <div class="constraints" id="rectum-constraints">
-                    <div class="constraint-item">
-                        <div class="constraint-endpoint">Grade 2+ Proctitis</div>
-                        <div class="constraint-dose">V70Gy < 20%</div>
-                        <div class="constraint-risk">~10-15% risk</div>
-                    </div>
-                    <div class="constraint-item">
-                        <div class="constraint-endpoint">Late toxicity</div>
-                        <div class="constraint-dose">V40Gy < 60%</div>
-                        <div class="constraint-risk">Additional constraint</div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="organ-card moderate" data-organ="bladder">
-                <div class="organ-header">
-                    <div class="organ-name">
-                        🫧 Bladder
-                        <span class="organ-type moderate">Mixed</span>
-                    </div>
-                    <button class="toggle-btn" onclick="toggleConstraints('bladder')">Show Constraints</button>
-                </div>
-                <div class="constraints" id="bladder-constraints">
-                    <div class="constraint-item">
-                        <div class="constraint-endpoint">Grade 3+ Cystitis</div>
-                        <div class="constraint-dose">V70Gy < 30%</div>
-                        <div class="constraint-risk">~6% risk</div>
-                    </div>
-                    <div class="constraint-item">
-                        <div class="constraint-endpoint">Whole bladder</div>
-                        <div class="constraint-dose">V50Gy < 50%</div>
-                        <div class="constraint-risk">Functional preservation</div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="organ-card moderate" data-organ="small-bowel">
-                <div class="organ-header">
-                    <div class="organ-name">
-                        🌀 Small Bowel
-                        <span class="organ-type moderate">Serial</span>
-                    </div>
-                    <button class="toggle-btn" onclick="toggleConstraints('small-bowel')">Show Constraints</button>
-                </div>
-                <div class="constraints" id="small-bowel-constraints">
-                    <div class="constraint-item">
-                        <div class="constraint-endpoint">Grade 3+ Toxicity</div>
-                        <div class="constraint-dose">V45Gy < 195 cm³</div>
-                        <div class="constraint-risk">~10% risk obstruction</div>
-                    </div>
-                    <div class="constraint-item">
-                        <div class="constraint-endpoint">Maximum Point Dose</div>
-                        <div class="constraint-dose">Dmax < 54 Gy</div>
-                        <div class="constraint-risk">Hot spot avoidance</div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="organ-card moderate" data-organ="lens">
-                <div class="organ-header">
-                    <div class="organ-name">
-                        👁️ Lens
-                        <span class="organ-type moderate">Serial</span>
-                    </div>
-                    <button class="toggle-btn" onclick="toggleConstraints('lens')">Show Constraints</button>
-                </div>
-                <div class="constraints" id="lens-constraints">
-                    <div class="constraint-item">
-                        <div class="constraint-endpoint">Cataract Formation</div>
-                        <div class="constraint-dose">Dmax < 25 Gy</div>
-                        <div class="constraint-risk">Age-dependent risk</div>
-                    </div>
-                    <div class="constraint-item">
-                        <div class="constraint-endpoint">Single Fraction</div>
-                        <div class="constraint-dose">< 2 Gy per fraction</div>
-                        <div class="constraint-risk">Lower single dose tolerance</div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="organ-card critical" data-organ="cauda-equina">
-                <div class="organ-header">
-                    <div class="organ-name">
-                        🦴 Cauda Equina
-                        <span class="organ-type critical">Serial</span>
-                    </div>
-                    <button class="toggle-btn" onclick="toggleConstraints('cauda-equina')">Show Constraints</button>
-                </div>
-                <div class="constraints" id="cauda-equina-constraints">
-                    <div class="constraint-item">
-                        <div class="constraint-endpoint">Neuropathy</div>
-                        <div class="constraint-dose">Dmax < 60 Gy</div>
-                        <div class="constraint-risk">Higher tolerance than spinal cord</div>
-                    </div>
-                    <div class="constraint-item">
-                        <div class="constraint-endpoint">Functional Preservation</div>
-                        <div class="constraint-dose">Mean dose < 50 Gy</div>
-                        <div class="constraint-risk">Motor/sensory function</div>
-                    </div>
-                </div>
-            </div>
-            
         </div>
     </div>
     
     <script>
-        let studiedOrgans = new Set();
-        
-        function toggleConstraints(organId) {
-            const constraints = document.getElementById(organId + '-constraints');
-            const button = constraints.parentElement.querySelector('.toggle-btn');
-            
-            if (constraints.classList.contains('visible')) {
-                constraints.classList.remove('visible');
-                button.textContent = 'Show Constraints';
-                button.classList.remove('showing');
-                studiedOrgans.delete(organId);
-            } else {
-                constraints.classList.add('visible');
-                button.textContent = 'Hide Constraints';
-                button.classList.add('showing');
-                studiedOrgans.add(organId);
-            }
-            
-            updateProgress();
+        function openTopic(url) {
+            window.open(url, '_blank');
         }
         
-        function showAll() {
-            const allConstraints = document.querySelectorAll('.constraints');
-            const allButtons = document.querySelectorAll('.toggle-btn');
-            
-            allConstraints.forEach((constraint, index) => {
-                constraint.classList.add('visible');
-                allButtons[index].textContent = 'Hide Constraints';
-                allButtons[index].classList.add('showing');
-                
-                const organId = constraint.id.replace('-constraints', '');
-                studiedOrgans.add(organId);
-            });
-            
-            updateProgress();
-        }
-        
-        function hideAll() {
-            const allConstraints = document.querySelectorAll('.constraints');
-            const allButtons = document.querySelectorAll('.toggle-btn');
-            
-            allConstraints.forEach((constraint, index) => {
-                constraint.classList.remove('visible');
-                allButtons[index].textContent = 'Show Constraints';
-                allButtons[index].classList.remove('showing');
-            });
-            
-            studiedOrgans.clear();
-            updateProgress();
-        }
-        
-        function randomQuiz() {
-            hideAll();
-            const organCards = document.querySelectorAll('.organ-card');
-            const randomIndex = Math.floor(Math.random() * organCards.length);
-            const randomOrgan = organCards[randomIndex].dataset.organ;
-            
-            // Scroll to the random organ
-            organCards[randomIndex].scrollIntoView({ behavior: 'smooth', block: 'center' });
-            
-            // Highlight it temporarily
-            organCards[randomIndex].style.transform = 'scale(1.05)';
-            organCards[randomIndex].style.boxShadow = '0 15px 30px rgba(102, 126, 234, 0.3)';
-            
-            setTimeout(() => {
-                organCards[randomIndex].style.transform = '';
-                organCards[randomIndex].style.boxShadow = '';
-            }, 2000);
-        }
-        
-        function updateProgress() {
-            const totalOrgans = document.querySelectorAll('.organ-card').length;
-            const studiedCount = studiedOrgans.size;
-            const progressPercent = Math.round((studiedCount / totalOrgans) * 100);
-            
-            document.getElementById('studied-count').textContent = studiedCount;
-            document.getElementById('progress-percent').textContent = progressPercent + '%';
-            document.getElementById('progressFill').style.width = progressPercent + '%';
-        }
-        
-        // Search functionality
+        // Simple search functionality
         document.getElementById('searchBox').addEventListener('input', function(e) {
             const searchTerm = e.target.value.toLowerCase();
-            const organCards = document.querySelectorAll('.organ-card');
+            const topics = document.querySelectorAll('.topic-card');
             
-            organCards.forEach(card => {
-                const organName = card.querySelector('.organ-name').textContent.toLowerCase();
-                const constraints = card.querySelector('.constraints').textContent.toLowerCase();
+            topics.forEach(topic => {
+                const title = topic.querySelector('.topic-title').textContent.toLowerCase();
+                const desc = topic.querySelector('.topic-desc').textContent.toLowerCase();
                 
-                if (organName.includes(searchTerm) || constraints.includes(searchTerm)) {
-                    card.style.display = 'block';
+                if (title.includes(searchTerm) || desc.includes(searchTerm)) {
+                    topic.style.display = 'block';
                 } else {
-                    card.style.display = searchTerm === '' ? 'block' : 'none';
+                    topic.style.display = searchTerm === '' ? 'block' : 'none';
                 }
             });
         });
         
-        // Initialize progress
-        updateProgress();
+        // Update article count
+        document.addEventListener('DOMContentLoaded', function() {
+            const articleCount = document.querySelectorAll('.topic-card').length;
+            document.getElementById('total-articles').textContent = articleCount;
+        });
     </script>
 </body>
 </html>
