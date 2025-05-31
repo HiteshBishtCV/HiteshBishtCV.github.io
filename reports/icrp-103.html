@@ -201,6 +201,90 @@
             font-size: 1.5em;
             margin-bottom: 5px;
         }
+        /* ADD MOBILE STYLES HERE - AT THE END OF YOUR EXISTING STYLES */
+        
+        /* ===== MOBILE RESPONSIVE STYLES ===== */
+        @media (max-width: 768px) {
+            body { 
+                padding: 10px; 
+            }
+            
+            .container { 
+                padding: 20px; 
+                margin: 0; 
+            }
+            
+            .header h1 { 
+                font-size: 1.8em !important; 
+            }
+            
+            /* Navigation */
+            .back-nav { 
+                flex-direction: column; 
+                gap: 8px; 
+            }
+            
+            .back-nav a { 
+                width: 100%; 
+                text-align: center; 
+                margin: 0 0 8px 0; 
+                min-height: 44px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            /* Grids */
+            .topics, .examples-grid, .comparison-grid, 
+            .scientific-basis, .framework-grid, .dose-range,
+            .implementation-flow, .calibration-info { 
+                grid-template-columns: 1fr !important; 
+                gap: 10px; 
+            }
+            
+            /* Cards */
+            .topic-card, .example-card, .concept-card,
+            .scenario-card, .basis-section { 
+                padding: 15px; 
+                touch-action: manipulation;
+            }
+            
+            .topic-card:hover {
+                transform: none;
+            }
+            
+            .topic-card:active {
+                transform: scale(0.98);
+                background: #e9ecef;
+            }
+            
+            /* Tables */
+            .risk-table, .comparison-table, .dose-table,
+            .operational-table, .weighting-table { 
+                font-size: 0.8em; 
+                overflow-x: auto;
+                display: block;
+            }
+            
+            /* Buttons */
+            .toggle-btn, .btn, .calculate-btn { 
+                min-height: 44px; 
+                padding: 12px 20px; 
+                width: 100%;
+                margin: 5px 0;
+            }
+            
+            /* Text sizes */
+            .section-title { font-size: 1.3em; }
+            .concept-title { font-size: 1.2em; }
+            .scenario-title { font-size: 1.3em; }
+            
+            /* Search box */
+            .search-box {
+                font-size: 16px; /* Prevents zoom on iOS */
+                padding: 12px;
+            }
+        }
     </style>
 </head>
 <body>
