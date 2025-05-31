@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exposure Framework - ICRP-103</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #16a085 0%, #1abc9c 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            background: linear-gradient(135deg, #16a085, #1abc9c);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+        
+        .back-nav {
+            margin-bottom: 20px;
+        }
+        
+        .back-nav a {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #16a085;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 10px 20px;
+            background: white;
+            border-radius: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            margin-right: 10px;
+        }
+        
+        .back-nav a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(22, 160, 133, 0.3);
+        }
+        
+        .framework-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 25px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            border-left: 8px solid #16a085;
+        }
+        
+        .section-title {
+            font-size: 1.6em;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .framework-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .framework-card {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 15px;
+            padding: 25px;
+            border-left: 5px solid #16a085;
+            transition: all 0.3s ease;
+        }
+        
+        .framework-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        
+        .framework-card.planned {
+            border-left-color: #27ae60;
+            background: linear-gradient(135deg, #e8f5e8, #d4edda);
+        }
+        
+        .framework-card.emergency {
+            border-left-color: #e74c3c;
+            background: linear-gradient(135deg, #ffeaa7, #fdcb6e);
+        }
+        
+        .framework-card.existing {
+            border-left-color: #3498db;
+            background: linear-gradient(135deg, #e8f4fd, #cce5ff);
+        }
+        
+        .card-title {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        
+        .card-definition {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-style: italic;
+            border-left: 4px solid #16a085;
+        }
+        
+        .examples-list {
+            background: rgba(255, 255, 255, 0.6);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+        
+        .matrix-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .matrix-table th {
+            background: linear-gradient(135deg, #16a085, #1abc9c);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .matrix-table td {
+            padding: 12px 15px;
+            text-align: center;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .matrix-table tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .exposure-type {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #16a085;
+        }
+        
+        .type-title {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        .individual-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .individual-card {
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .individual-title {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+        
+        .dose-limit {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+        
+        .key-principles {
+            background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+            border-left: 5px solid #ffc107;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .decision-tree {
+            background: #f8f9fa;
+            border: 2px solid #dee2e6;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+        
+        .tree-step {
+            background: white;
+            border-left: 4px solid #16a085;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .tree-number {
+            background: #16a085;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="back-nav">
+            <a href="/reports/icrp-103.html">← Back to ICRP-103</a>
+            <a href="/index.html">🏠 Home</a>
+        </div>
+        
+        <div class="header">
+            <h1>🏗️ Exposure Framework</h1>
+            <p>Situations, Types of Exposure, and Exposed Individuals - ICRP-103</p>
+        </div>
+        
+        <div class="framework-section">
+            <div class="section-title">🎯 Three Types of Exposure Situations</div>
+            
+            <div class="framework-grid">
+                <div class="framework-card planned">
+                    <div class="card-title">1. Planned Exposure Situations</div>
+                    <div class="card-definition">
+                        "Situations involving the deliberate introduction and operation of radiation sources"
+                    </div>
+                    <div class="examples-list">
+                        <strong>Examples:</strong>
+                        <ul>
+                            <li>Nuclear power plants</li>
+                            <li>Medical facilities</li>
+                            <li>Industrial radiography</li>
+                            <li>Research reactors</li>
+                            <li>Transport of radioactive material</li>
+                        </ul>
+                    </div>
+                    <div style="background: rgba(39, 174, 96, 0.1); padding: 15px; border-radius: 10px; margin-top: 15px;">
+                        <strong>Key Features:</strong> Can be planned and controlled in advance, optimization possible
+                    </div>
+                </div>
+                
+                <div class="framework-card emergency">
+                    <div class="card-title">2. Emergency Exposure Situations</div>
+                    <div class="card-definition">
+                        "Situations that may occur during the operation of a planned situation, or from a malicious act, or from any other unexpected situation"
+                    </div>
+                    <div class="examples-list">
+                        <strong>Examples:</strong>
+                        <ul>
+                            <li>Nuclear reactor accidents</li>
+                            <li>Transport accidents</li>
+                            <li>Radiological terrorism</li>
+                            <li>Lost or stolen sources</li>
+                            <li>Satellite re-entry</li>
+                        </ul>
+                    </div>
+                    <div style="background: rgba(231, 76, 60, 0.1); padding: 15px; border-radius: 10px; margin-top: 15px;">
+                        <strong>Key Features:</strong> Urgent action required, protective measures to reduce exposures
+                    </div>
+                </div>
+                
+                <div class="framework-card existing">
+                    <div class="card-title">3. Existing Exposure Situations</div>
+                    <div class="card-definition">
+                        "Exposure situations that already exist when a decision on the need for control has to be taken"
+                    </div>
+                    <div class="examples-list">
+                        <strong>Examples:</strong>
+                        <ul>
+                            <li>Natural background radiation</li>
+                            <li>Radon in buildings</li>
+                            <li>NORM (naturally occurring radioactive material)</li>
+                            <li>Residual contamination from past activities</li>
+                            <li>Fallout from weapons testing</li>
+                        </ul>
+                    </div>
+                    <div style="background: rgba(52, 152, 219, 0.1); padding: 15px; border-radius: 10px; margin-top: 15px;">
+                        <strong>Key Features:</strong> Exposure already occurring, decide whether to intervene
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="framework-section">
+            <div class="section-title">⚡ Types of Exposure</div>
+            
+            <div class="exposure-type">
+                <div class="type-title">📋 Certain vs Potential Exposure</div>
+                <p><strong>Certain Exposure:</strong> Exposure that is sure to be received</p>
+                <p><strong>Potential Exposure:</strong> Exposure that might be received (probabilistic)</p>
+                <ul>
+                    <li>Must consider both in protection assessment</li>
+                    <li>Potential exposure weighted by probability of occurrence</li>
+                    <li>Important for accident scenarios and security considerations</li>
+                </ul>
+            </div>
+            
+            <div class="exposure-type">
+                <div class="type-title">👷 Occupational Exposure</div>
+                <p>Exposure of workers incurred as a result of their work</p>
+                <ul>
+                    <li><strong>Scope:</strong> All work-related radiation exposure</li>
+                    <li><strong>Responsibility:</strong> Employer must ensure protection</li>
+                    <li><strong>Limits:</strong> 20 mSv/year effective dose</li>
+                    <li><strong>Optimization:</strong> Dose constraints typically 5-10 mSv/year</li>
+                </ul>
+            </div>
+            
+            <div class="exposure-type">
+                <div class="type-title">🏥 Medical Exposure</div>
+                <p>Exposure of patients, volunteers in research, and persons helping patients</p>
+                <ul>
+                    <li><strong>Patients:</strong> No dose limits (justification + optimization)</li>
+                    <li><strong>Research volunteers:</strong> Ethical approval + dose constraints</li>
+                    <li><strong>Carers/comforters:</strong> Guidance levels ~5 mSv per episode</li>
+                    <li><strong>Special consideration:</strong> Pregnant women and children</li>
+                </ul>
+            </div>
+            
+            <div class="exposure-type">
+                <div class="type-title">👥 Public Exposure</div>
+                <p>Exposure of members of the public from radiation sources</p>
+                <ul>
+                    <li><strong>Excludes:</strong> Natural background, medical exposure as patients</li>
+                    <li><strong>Includes:</strong> Nuclear facilities, consumer products, occupationally exposed family members</li>
+                    <li><strong>Limits:</strong> 1 mSv/year effective dose</li>
+                    <li><strong>Optimization:</strong> Dose constraints typically 0.1-0.3 mSv/year</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="framework-section">
+            <div class="section-title">👤 Categories of Exposed Individuals</div>
+            
+            <div class="individual-grid">
+                <div class="individual-card">
+                    <div class="individual-title">👷 Workers</div>
+                    <div class="dose-limit">20 mSv/year</div>
+                    <div>Effective dose limit</div>
+                </div>
+                
+                <div class="individual-card">
+                    <div class="individual-title">👥 Public</div>
+                    <div class="dose-limit">1 mSv/year</div>
+                    <div>Effective dose limit</div>
+                </div>
+                
+                <div class="individual-card">
+                    <div class="individual-title">🎓 Trainees</div>
+                    <div class="dose-limit">6 mSv/year</div>
+                    <div>16-18 years old</div>
+                </div>
+                
+                <div class="individual-card">
+                    <div class="individual-title">🤱 Pregnant Workers</div>
+                    <div class="dose-limit">1 mSv</div>
+                    <div>Fetus during pregnancy</div>
+                </div>
+            </div>
+            
+            <table class="matrix-table">
+                <thead>
+                    <tr>
+                        <th>Individual Category</th>
+                        <th>Age Range</th>
+                        <th>Effective Dose Limit</th>
+                        <th>Eye Lens Limit</th>
+                        <th>Skin Limit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Occupational Workers</strong></td>
+                        <td>≥18 years</td>
+                        <td>20 mSv/year</td>
+                        <td>20 mSv/year</td>
+                        <td>500 mSv/year</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Trainees</strong></td>
+                        <td>16-18 years</td>
+                        <td>6 mSv/year</td>
+                        <td>20 mSv/year</td>
+                        <td>150 mSv/year</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Public</strong></td>
+                        <td>All ages</td>
+                        <td>1 mSv/year</td>
+                        <td>15 mSv/year</td>
+                        <td>50 mSv/year</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Pregnant Worker (fetus)</strong></td>
+                        <td>Prenatal</td>
+                        <td>1 mSv total</td>
+                        <td>-</td>
+                        <td>2 mSv (abdomen)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="framework-section">
+            <div class="section-title">🔄 Framework Application Decision Tree</div>
+            
+            <div class="decision-tree">
+                <div class="tree-step">
+                    <div class="tree-number">1</div>
+                    <div>
+                        <strong>Identify Exposure Situation:</strong>
+                        <br>Planned, Emergency, or Existing?
+                    </div>
+                </div>
+                
+                <div class="tree-step">
+                    <div class="tree-number">2</div>
+                    <div>
+                        <strong>Classify Exposure Type:</strong>
+                        <br>Occupational, Medical, or Public?
+                    </div>
+                </div>
+                
+                <div class="tree-step">
+                    <div class="tree-number">3</div>
+                    <div>
+                        <strong>Determine Individual Category:</strong>
+                        <br>Worker, Public, Trainee, Pregnant?
+                    </div>
+                </div>
+                
+                <div class="tree-step">
+                    <div class="tree-number">4</div>
+                    <div>
+                        <strong>Apply Appropriate Limits/Constraints:</strong>
+                        <br>Based on situation and individual type
+                    </div>
+                </div>
+                
+                <div class="tree-step">
+                    <div class="tree-number">5</div>
+                    <div>
+                        <strong>Implement Protection Strategy:</strong>
+                        <br>Justification, Optimization, Dose Limits
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="key-principles">
+            <h3>🎯 Key Exam Points</h3>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div>
+                    <h4>Situation Classifications:</h4>
+                    <ul>
+                        <li><strong>Planned:</strong> Can optimize in advance</li>
+                        <li><strong>Emergency:</strong> Urgent protective actions</li>
+                        <li><strong>Existing:</strong> Decide whether to intervene</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Individual Categories:</h4>
+                    <ul>
+                        <li><strong>Workers:</strong> Accept higher doses for benefits</li>
+                        <li><strong>Public:</strong> Lower limits, no direct benefit</li>
+                        <li><strong>Trainees:</strong> Intermediate limits (learning)</li>
+                        <li><strong>Pregnant:</strong> Special fetal protection</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div style="background: rgba(22, 160, 133, 0.1); padding: 15px; border-radius: 10px; margin-top: 15px;">
+                <strong>Remember:</strong> The framework provides a systematic approach to radiation protection by first categorizing the situation, then the type of exposure, and finally the exposed individuals to determine appropriate protection measures.
+            </div>
+        </div>
+    </div>
+</body>
