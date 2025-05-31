@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System of Radiological Protection - ICRP-103</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+        
+        .back-nav {
+            margin-bottom: 20px;
+        }
+        
+        .back-nav a {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 10px 20px;
+            background: white;
+            border-radius: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            margin-right: 10px;
+        }
+        
+        .back-nav a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+        
+        .principle-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 25px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            border-left: 8px solid #3498db;
+        }
+        
+        .principle-number {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        
+        .principle-title {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .principle-definition {
+            background: #e8f4fd;
+            border-left: 4px solid #3498db;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            font-style: italic;
+            font-size: 1.1em;
+        }
+        
+        .implementation-box {
+            background: #f8f9fa;
+            border: 2px solid #dee2e6;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .example-card {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #28a745;
+        }
+        
+        .example-title {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .constraint-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .constraint-table th {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .constraint-table td {
+            padding: 12px 15px;
+            text-align: center;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .optimization-steps {
+            background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+        
+        .step-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 15px 0;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            border-left: 4px solid #ff9800;
+        }
+        
+        .step-number {
+            background: #ff9800;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, #d4edda, #c3e6cb);
+            border: 2px solid #28a745;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .key-points {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .point-card {
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="back-nav">
+            <a href="/reports/icrp-103.html">← Back to ICRP-103</a>
+            <a href="/index.html">🏠 Home</a>
+        </div>
+        
+        <div class="header">
+            <h1>🛡️ System of Radiological Protection</h1>
+            <p>The Three Fundamental Principles of ICRP-103</p>
+        </div>
+        
+        <div class="principle-card">
+            <div class="principle-title">
+                <div class="principle-number">1</div>
+                Justification
+            </div>
+            
+            <div class="principle-definition">
+                "Any decision that alters the radiation exposure situation should do more good than harm."
+            </div>
+            
+            <div class="implementation-box">
+                <h4>Implementation:</h4>
+                <ul>
+                    <li><strong>Benefit-Risk Analysis:</strong> Expected benefits must outweigh radiation detriment</li>
+                    <li><strong>Net Positive Outcome:</strong> Overall benefit to society or exposed individuals</li>
+                    <li><strong>Alternative Consideration:</strong> Evaluate non-radiation alternatives</li>
+                </ul>
+            </div>
+            
+            <div class="examples-grid">
+                <div class="example-card">
+                    <div class="example-title">Medical Exposures</div>
+                    <p>CT scan justified if diagnostic benefit outweighs cancer risk. Consider clinical need, patient age, alternative imaging.</p>
+                </div>
+                <div class="example-card">
+                    <div class="example-title">Nuclear Power</div>
+                    <p>Energy benefits vs radiation risks, environmental impact, and economic factors.</p>
+                </div>
+                <div class="example-card">
+                    <div class="example-title">Security Screening</div>
+                    <p>Airport scanners: security benefits vs minimal radiation exposure to public.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="principle-card">
+            <div class="principle-title">
+                <div class="principle-number">2</div>
+                Optimization (ALARA/ALARP)
+            </div>
+            
+            <div class="principle-definition">
+                "The likelihood of incurring exposures, the number of people exposed, and the magnitude of their individual doses should all be kept as low as reasonably achievable (ALARA), taking into account economic and societal factors."
+            </div>
+            
+            <div class="optimization-steps">
+                <h4>Optimization Process:</h4>
+                <div class="step-item">
+                    <div class="step-number">1</div>
+                    <div>
+                        <strong>Set Dose Constraints:</strong> Upper bounds for optimization (below dose limits)
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">2</div>
+                    <div>
+                        <strong>Identify Options:</strong> Different protective measures and their costs
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">3</div>
+                    <div>
+                        <strong>Cost-Benefit Analysis:</strong> Evaluate cost per unit dose saved
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">4</div>
+                    <div>
+                        <strong>Select Optimal Level:</strong> Balance protection with practicality
+                    </div>
+                </div>
+            </div>
+            
+            <table class="constraint-table">
+                <thead>
+                    <tr>
+                        <th>Exposure Category</th>
+                        <th>Typical Dose Constraint</th>
+                        <th>Dose Limit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Public (planned exposures)</td>
+                        <td>0.1 - 0.3 mSv/year</td>
+                        <td>1 mSv/year</td>
+                    </tr>
+                    <tr>
+                        <td>Workers (routine work)</td>
+                        <td>5 - 10 mSv/year</td>
+                        <td>20 mSv/year</td>
+                    </tr>
+                    <tr>
+                        <td>Emergency responders</td>
+                        <td>100 mSv (non-lifesaving)</td>
+                        <td>No strict limit</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="principle-card">
+            <div class="principle-title">
+                <div class="principle-number">3</div>
+                Individual Dose Limits
+            </div>
+            
+            <div class="principle-definition">
+                "The total dose to any individual from regulated sources in planned exposure situations other than medical exposure of patients should not exceed the appropriate limits."
+            </div>
+            
+            <div class="implementation-box">
+                <h4>Purpose of Dose Limits:</h4>
+                <ul>
+                    <li><strong>Prevent Deterministic Effects:</strong> Keep doses below thresholds</li>
+                    <li><strong>Limit Stochastic Risk:</strong> Restrict probability of cancer/hereditary effects</li>
+                    <li><strong>Provide Regulatory Framework:</strong> Clear compliance criteria</li>
+                    <li><strong>Not Applicable to:</strong> Medical exposures of patients, emergency exposures</li>
+                </ul>
+            </div>
+            
+            <div class="key-points">
+                <div class="point-card">
+                    <div>Occupational</div>
+                    <div><strong>20 mSv/year</strong></div>
+                </div>
+                <div class="point-card">
+                    <div>Public</div>
+                    <div><strong>1 mSv/year</strong></div>
+                </div>
+                <div class="point-card">
+                    <div>Trainee</div>
+                    <div><strong>6 mSv/year</strong></div>
+                </div>
+                <div class="point-card">
+                    <div>Pregnant Worker</div>
+                    <div><strong>1 mSv fetus</strong></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="highlight-box">
+            <h3>🎯 Integration of the Three Principles</h3>
+            <p><strong>Sequential Application:</strong></p>
+            <ol>
+                <li><strong>First - Justification:</strong> Is the practice worthwhile?</li>
+                <li><strong>Second - Optimization:</strong> How can we minimize doses while maintaining benefits?</li>
+                <li><strong>Third - Dose Limits:</strong> Have we stayed within acceptable risk levels?</li>
+            </ol>
+            
+            <div class="implementation-box">
+                <h4>Practical Example - Nuclear Medicine:</h4>
+                <ul>
+                    <li><strong>Justification:</strong> Diagnostic information justifies radiation risk</li>
+                    <li><strong>Optimization:</strong> Minimize activity, optimize imaging protocols</li>
+                    <li><strong>Dose Limits:</strong> Staff doses below 20 mSv/year</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="principle-card">
+            <div class="principle-title">🔍 Key Exam Points</div>
+            
+            <div class="examples-grid">
+                <div class="example-card">
+                    <div class="example-title">Justification Level</div>
+                    <ul>
+                        <li>Practice level (e.g., CT screening)</li>
+                        <li>Generic level (e.g., medical imaging)</li>
+                        <li>Individual level (this patient, this exam)</li>
+                    </ul>
+                </div>
+                <div class="example-card">
+                    <div class="example-title">Optimization Tools</div>
+                    <ul>
+                        <li>Dose constraints</li>
+                        <li>Reference levels</li>
+                        <li>Cost-benefit analysis</li>
+                        <li>BAT (Best Available Technology)</li>
+                    </ul>
+                </div>
+                <div class="example-card">
+                    <div class="example-title">Limit Applications</div>
+                    <ul>
+                        <li>Apply to planned exposures only</li>
+                        <li>Exclude medical patient doses</li>
+                        <li>Include natural background exclusions</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="implementation-box">
+                <h4>Remember for Exams:</h4>
+                <ul>
+                    <li><strong>Order matters:</strong> Justification → Optimization → Dose limits</li>
+                    <li><strong>All three apply:</strong> Even with dose limits, must optimize</li>
+                    <li><strong>Situation-specific:</strong> Different approaches for planned/emergency/existing</li>
+                    <li><strong>Individual focus:</strong> Protect individuals, not just populations</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
