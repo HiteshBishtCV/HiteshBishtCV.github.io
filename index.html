@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Knowledge Base</title>
+    <title>Medical Physics Knowledge Base</title>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -126,7 +126,7 @@
         
         .topics {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 15px;
             margin-top: 20px;
         }
@@ -138,12 +138,49 @@
             padding: 20px;
             transition: all 0.3s ease;
             cursor: pointer;
+            position: relative;
         }
         
         .topic-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 25px rgba(102, 126, 234, 0.15);
             border-color: #667eea;
+        }
+        
+        .topic-card.featured {
+            background: linear-gradient(135deg, #e8f5e8, #d4f1d4);
+            border-color: #28a745;
+        }
+        
+        .topic-card.featured::before {
+            content: "✨ NEW";
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #28a745;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.7em;
+            font-weight: bold;
+        }
+        
+        .topic-card.interactive {
+            background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+            border-color: #ffc107;
+        }
+        
+        .topic-card.interactive::before {
+            content: "🎯 INTERACTIVE";
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #ffc107;
+            color: #212529;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.7em;
+            font-weight: bold;
         }
         
         .topic-title {
@@ -187,25 +224,63 @@
             color: #6c757d;
             font-size: 0.9em;
         }
+        
+        .quick-links {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .quick-links h3 {
+            color: #1976d2;
+            margin-top: 0;
+        }
+        
+        .quick-link-btn {
+            display: inline-block;
+            background: #1976d2;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            text-decoration: none;
+            margin: 5px;
+            transition: transform 0.2s;
+        }
+        
+        .quick-link-btn:hover {
+            transform: translateY(-2px);
+            background: #1565c0;
+            text-decoration: none;
+            color: white;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>🧠 My Knowledge Base</h1>
+        <h1>🧠 Medical Physics Knowledge Base</h1>
         
         <div class="stats">
             <div class="stat">
                 <div class="stat-number" id="total-articles">0</div>
-                <div class="stat-label">Articles</div>
+                <div class="stat-label">Study Resources</div>
             </div>
             <div class="stat">
-                <div class="stat-number" id="total-categories">5</div>
+                <div class="stat-number">6</div>
                 <div class="stat-label">Categories</div>
             </div>
             <div class="stat">
-                <div class="stat-number" id="last-updated">Today</div>
-                <div class="stat-label">Last Updated</div>
+                <div class="stat-number">3</div>
+                <div class="stat-label">Interactive Tools</div>
             </div>
+        </div>
+        
+        <div class="quick-links">
+            <h3>🎯 Quick Access to Medical Physics Tools</h3>
+            <a href="medical-physics/study-guide.html" class="quick-link-btn">Study Guide</a>
+            <a href="medical-physics/dosimetry-fundamentals.html" class="quick-link-btn">Dosimetry</a>
+            <a href="reports/reports.html" class="quick-link-btn">Reports</a>
         </div>
         
         <input type="text" class="search-box" placeholder="🔍 Search your knowledge..." id="searchBox">
@@ -213,17 +288,22 @@
         <div class="category">
             <h2><span class="category-icon">📊</span> Reports & Guidelines</h2>
             <div class="topics">
-                <div class="topic-card" onclick="openTopic('reports/icrp-103.html')">
+                <div class="topic-card featured" onclick="openPage('reports/reports.html')">
+                    <div class="topic-title">📋 Essential Medical Physics Reports</div>
+                    <div class="topic-desc">Comprehensive reference for TG, TRS, TECDOC, IEC, ICRU & ICRP reports in tabular format</div>
+                    <div class="topic-date">Added: June 4, 2025</div>
+                </div>
+                <div class="topic-card" onclick="openPage('reports/icrp-103.html')">
                     <div class="topic-title">ICRP-103: Recommendations of the ICRP</div>
                     <div class="topic-desc">Comprehensive study guide for 2007 recommendations</div>
                     <div class="topic-date">Added: May 31, 2025</div>
                 </div>
-                <div class="topic-card" onclick="openTopic('reports/icrp-60.html')">
+                <div class="topic-card" onclick="openPage('reports/icrp-60.html')">
                     <div class="topic-title">ICRP-60 Comparison</div>
                     <div class="topic-desc">Key differences and evolution from ICRP-60</div>
                     <div class="topic-date">Coming soon...</div>
                 </div>
-                <div class="topic-card" onclick="openTopic('reports/ncrp-reports.html')">
+                <div class="topic-card" onclick="openPage('reports/ncrp-reports.html')">
                     <div class="topic-title">NCRP Reports Summary</div>
                     <div class="topic-desc">Key NCRP recommendations and guidelines</div>
                     <div class="topic-date">Coming soon...</div>
@@ -234,22 +314,32 @@
         <div class="category">
             <h2><span class="category-icon">🏥</span> Medical Physics Examination</h2>
             <div class="topics">
-                <div class="topic-card" onclick="openTopic('medical-physics/quantec-constraints.html')">
+                <div class="topic-card featured interactive" onclick="openPage('medical-physics/study-guide.html')">
+                    <div class="topic-title">⚕️ Medical Physics Exam Study Guide</div>
+                    <div class="topic-desc">Interactive constants, formulas, decay schemes & quiz mode for Co-60, Cs-137, Ir-192, I-131</div>
+                    <div class="topic-date">Added: June 4, 2025</div>
+                </div>
+                <div class="topic-card featured interactive" onclick="openPage('medical-physics/dosimetry-fundamentals.html')">
+                    <div class="topic-title">📊 Dosimetry Fundamentals</div>
+                    <div class="topic-desc">Interactive guide covering exposure, kerma, absorbed dose, conversions & Bragg-Gray cavity theory</div>
+                    <div class="topic-date">Added: June 4, 2025</div>
+                </div>
+                <div class="topic-card interactive" onclick="openPage('medical-physics/quantec-constraints.html')">
                     <div class="topic-title">QUANTEC IMRT Dose Constraints</div>
                     <div class="topic-desc">Interactive dose constraints for organs with memorization features</div>
                     <div class="topic-date">Added: May 31, 2025</div>
                 </div>
-                <div class="topic-card" onclick="openTopic('medical-physics/radiation-biology.html')">
+                <div class="topic-card" onclick="openPage('medical-physics/radiation-biology.html')">
                     <div class="topic-title">Radiation Biology</div>
                     <div class="topic-desc">Cell survival curves, fractionation, and radiobiological models</div>
                     <div class="topic-date">Added: May 31, 2025</div>
                 </div>
-                <div class="topic-card" onclick="openTopic('medical-physics/treatment-planning.html')">
+                <div class="topic-card" onclick="openPage('medical-physics/treatment-planning.html')">
                     <div class="topic-title">Treatment Planning Systems</div>
                     <div class="topic-desc">Algorithms, optimization, and plan evaluation</div>
                     <div class="topic-date">Coming soon...</div>
                 </div>
-                <div class="topic-card" onclick="openTopic('medical-physics/qa-procedures.html')">
+                <div class="topic-card" onclick="openPage('medical-physics/qa-procedures.html')">
                     <div class="topic-title">QA & Commissioning</div>
                     <div class="topic-desc">Daily, monthly, and annual QA procedures</div>
                     <div class="topic-date">Coming soon...</div>
@@ -260,54 +350,90 @@
         <div class="category">
             <h2><span class="category-icon">⚗️</span> Physics & Engineering</h2>
             <div class="topics">
-                <div class="topic-card" onclick="openTopic('physics/radiation-dose.html')">
+                <div class="topic-card" onclick="openPage('physics/radiation-dose.html')">
                     <div class="topic-title">Radiation Dose Calculations</div>
                     <div class="topic-desc">Expected value, variance, and detector measurements</div>
                     <div class="topic-date">Added: May 30, 2025</div>
                 </div>
-                <!-- Add more physics topics here -->
+                <div class="topic-card" onclick="openPage('physics/accelerator-physics.html')">
+                    <div class="topic-title">Accelerator Physics</div>
+                    <div class="topic-desc">Linear accelerator components, beam production, and focusing systems</div>
+                    <div class="topic-date">Coming soon...</div>
+                </div>
+                <div class="topic-card" onclick="openPage('physics/shielding-design.html')">
+                    <div class="topic-title">Radiation Shielding Design</div>
+                    <div class="topic-desc">Primary and secondary barriers, neutron shielding calculations</div>
+                    <div class="topic-date">Coming soon...</div>
+                </div>
             </div>
         </div>
         
         <div class="category">
             <h2><span class="category-icon">🧮</span> Mathematics & Statistics</h2>
             <div class="topics">
-                <div class="topic-card" onclick="openTopic('math/probability-distributions.html')">
+                <div class="topic-card interactive" onclick="openPage('math/probability-distributions.html')">
                     <div class="topic-title">Probability Distributions</div>
                     <div class="topic-desc">Interactive visualizations of normal, binomial, and Poisson distributions</div>
                     <div class="topic-date">Added: May 30, 2025</div>
                 </div>
-                <!-- Add more math topics here -->
+                <div class="topic-card" onclick="openPage('math/statistics-for-physics.html')">
+                    <div class="topic-title">Statistics for Medical Physics</div>
+                    <div class="topic-desc">Uncertainty analysis, confidence intervals, and measurement statistics</div>
+                    <div class="topic-date">Coming soon...</div>
+                </div>
+                <div class="topic-card" onclick="openPage('math/monte-carlo.html')">
+                    <div class="topic-title">Monte Carlo Methods</div>
+                    <div class="topic-desc">Introduction to MC simulation in radiation transport and dosimetry</div>
+                    <div class="topic-date">Coming soon...</div>
+                </div>
             </div>
         </div>
         
         <div class="category">
             <h2><span class="category-icon">💻</span> Programming & Tech</h2>
             <div class="topics">
-                <div class="topic-card" onclick="openTopic('programming/data-visualization.html')">
+                <div class="topic-card" onclick="openPage('programming/data-visualization.html')">
                     <div class="topic-title">Data Visualization Techniques</div>
                     <div class="topic-desc">Interactive charts and graphs with D3.js and Plotly</div>
                     <div class="topic-date">Coming soon...</div>
                 </div>
-                <!-- Add more programming topics here -->
+                <div class="topic-card" onclick="openPage('programming/python-for-physics.html')">
+                    <div class="topic-title">Python for Medical Physics</div>
+                    <div class="topic-desc">Essential Python libraries and tools for radiation therapy applications</div>
+                    <div class="topic-date">Coming soon...</div>
+                </div>
+                <div class="topic-card" onclick="openPage('programming/dicom-processing.html')">
+                    <div class="topic-title">DICOM Processing</div>
+                    <div class="topic-desc">Working with DICOM files, RT structures, and dose distributions</div>
+                    <div class="topic-date">Coming soon...</div>
+                </div>
             </div>
         </div>
         
         <div class="category">
             <h2><span class="category-icon">🎯</span> General Knowledge</h2>
             <div class="topics">
-                <div class="topic-card" onclick="openTopic('general/learning-systems.html')">
+                <div class="topic-card" onclick="openPage('general/learning-systems.html')">
                     <div class="topic-title">Knowledge Management Systems</div>
                     <div class="topic-desc">Comparison of Obsidian, Notion, and GitHub Pages</div>
                     <div class="topic-date">Added: May 30, 2025</div>
                 </div>
-                <!-- Add more general topics here -->
+                <div class="topic-card" onclick="openPage('general/professional-development.html')">
+                    <div class="topic-title">Medical Physics Career Guide</div>
+                    <div class="topic-desc">Board certification, residency programs, and continuing education</div>
+                    <div class="topic-date">Coming soon...</div>
+                </div>
+                <div class="topic-card" onclick="openPage('general/conference-resources.html')">
+                    <div class="topic-title">Conference & Journal Resources</div>
+                    <div class="topic-desc">Key conferences, journals, and professional organizations in medical physics</div>
+                    <div class="topic-date">Coming soon...</div>
+                </div>
             </div>
         </div>
     </div>
     
     <script>
-        function openTopic(url) {
+        function openPage(url) {
             window.open(url, '_blank');
         }
         
