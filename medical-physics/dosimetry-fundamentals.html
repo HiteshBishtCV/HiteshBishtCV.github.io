@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dosimetry Fundamentals</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            background: linear-gradient(45deg, #4facfe, #00f2fe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+        }
+        
+        .controls {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .quiz-btn {
+            background: linear-gradient(45deg, #4facfe, #00f2fe);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 0 10px;
+            transition: transform 0.2s;
+        }
+        
+        .quiz-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .back-btn {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 20px;
+            transition: background 0.3s;
+        }
+        
+        .back-btn:hover {
+            background: #5a6268;
+            text-decoration: none;
+            color: white;
+        }
+        
+        .section {
+            background: white;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .section-header {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            color: white;
+            padding: 15px 20px;
+            font-size: 1.3em;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .section-content {
+            padding: 20px;
+            display: none;
+        }
+        
+        .section.active .section-content {
+            display: block;
+        }
+        
+        .item {
+            margin-bottom: 15px;
+            padding: 15px;
+            border-left: 4px solid #4facfe;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .question {
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #2c3e50;
+        }
+        
+        .answer {
+            color: #495057;
+            font-family: 'Courier New', monospace;
+            background: #e9ecef;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+        
+        .answer.hidden {
+            background: #6c757d;
+            color: transparent;
+            user-select: none;
+            cursor: pointer;
+        }
+        
+        .answer.hidden:hover {
+            background: #5a6268;
+        }
+        
+        .answer.hidden::after {
+            content: "Click to reveal";
+            color: white;
+            font-style: italic;
+            font-family: sans-serif;
+        }
+        
+        .formula {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .highlight {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        
+        .concept-box {
+            background: #f0f8ff;
+            border: 2px solid #4facfe;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+        
+        .toggle-icon {
+            transition: transform 0.3s;
+        }
+        
+        .section.active .toggle-icon {
+            transform: rotate(180deg);
+        }
+        
+        .conversion-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+        }
+        
+        .conversion-table th,
+        .conversion-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+        
+        .conversion-table th {
+            background: #4facfe;
+            color: white;
+        }
+        
+        .conversion-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .quiz-btn {
+                display: block;
+                margin: 10px auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="../index.html" class="back-btn">← Back to Knowledge Base</a>
+        
+        <h1>📊 Dosimetry Fundamentals</h1>
+        
+        <div class="controls">
+            <button class="quiz-btn" onclick="toggleQuizMode()">Toggle Quiz Mode</button>
+            <button class="quiz-btn" onclick="showAllAnswers()">Show All Answers</button>
+            <button class="quiz-btn" onclick="hideAllAnswers()">Hide All Answers</button>
+        </div>
+        
+        <div class="section active">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span>🎯 Fundamental Quantities & Definitions</span>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="concept-box">
+                    <h3>Key Dosimetric Quantities</h3>
+                    <p>Understanding the hierarchy: <strong>Exposure → Kerma → Absorbed Dose</strong></p>
+                </div>
+                
+                <div class="item">
+                    <div class="question">Exposure (X) - Definition:</div>
+                    <div class="answer">Quotient of dQ by dm, where dQ is the absolute value of total charge of ions of one sign produced when all electrons liberated by photons in air of mass dm are completely stopped</div>
+                </div>
+                
+                <div class="item">
+                    <div class="question">Exposure - Formula:</div>
+                    <div class="answer formula">X = dQ/dm</div>
+                </div>
+                
+                <div class="item">
+                    <div class="question">Exposure - Units:</div>
+                    <div class="answer">SI: C/kg, Traditional: Roentgen (R)<br>1 R = 2.58 × 10⁻⁴ C/kg</div>
+                </div>
+                
+                <div class="item">
+                    <div class="question">Kerma (K) - Definition:</div>
+                    <div class="answer">Kinetic Energy Released per unit MAss - quotient of dEtr by dm, where dEtr is the sum of initial kinetic energies of all charged particles liberated by uncharged particles in matter of mass dm</div>
+                </div>
+                
+                <div class="item">
+                    <div class="question">Kerma - Formula:</div>
+                    <div class="answer formula">K = dEtr/dm</div>
+                </div>
+                
+                <div class="item">
+                    <div class="question">Absorbed Dose (D) - Definition:</div>
+                    <div class="answer">Mean energy imparted per unit mass - quotient of dε by dm, where dε is the mean energy imparted to matter of mass dm</div>
+                </div>
+                
+                <div class="item">
+                    <div class="question">Absorbed Dose - Formula:</div>
+                    <div class="answer formula">D = dε/dm</div>
+                </div>
+                
+                <div class="item">
+                    <div class="question">Common Units for K and D:</div>
+                    <div class="answer">SI: Gray (Gy = J/kg), Traditional: rad<br>1 Gy = 100 rad</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span>🔄 Conversion Relationships</span>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="concept-box">
+                    <h3>W-Values and f-Factors</h3>
+                    <p><strong>W-value:</strong> Mean energy required to produce an ion pair<br>
+                    <strong>f-factor:</strong> Ratio of mass energy absorption coefficients</p>
+                </div>
+                
+                <div class="item">
+                    <div class="question">W-value for Air:</div>
+                    <div class="answer">W_air = 33.97 eV/ion pair = 33.97 J/C</div>
+                </div>
+                
+                <div class="item">
+                    <div class="question">Exposure to Kerma (Air):</div>
+                    <div class="answer formula">K_air = X × W_air = X × 33.97 J/C</div>
+                </div>
+                
+                <div class="item">
+                    <div class="question">Exposure to Absorbed Dose (Air):</div>
+                    <div class="answer formula">D_air = X × W_air × (1 - g̅) ≈ X × 33.97 × 0.997</div>
+                </div>
+                
+                <div class="item">
+                    <div class="question">Kerma to Absorbed Dose:</div>
+                    <div class="answer formula">D = K × (1 - g̅)<br>where g̅ = average fraction of energy lost to bremsstrahlung</div>
+                </div>
+                
+                <div class="item">
+                    <div class="question">f-factor (tissue to air):</div>
+                    <div class="answer">f = (μₑₙ/ρ)_tissue / (μₑₙ/ρ)_air<br>Typical values: 1.06-1.11 for soft tissue</div>
+                </div>
+                
+                <div class="item">
+                    <div class="question">Air Kerma to Tissue Dose:</div>
+                    <div class="answer formula">D_tissue = K_air × f × (1 - g̅)</div>
+                </div>
+                
+                <div class="item">
+                    <div class="question">Exposure to Tissue Dose (Complete):</div>
+                    <div class="answer formula">D_tissue = X × W_air × f × (1 - g̅)</div>
+                </div>
+                
+                <table class="conversion-table">
+                    <thead>
+                        <tr>
+                            <th>From</th>
+                            <th>To</th>
+                            <th>Conversion Factor</th>
+                            <th>Formula</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Exposure (R)</td>
+                            <td>Air Kerma (Gy)</td>
+                            <td>0.873 × 10⁻² Gy/R</td>
+                            <td>K = X × 0.00873</td>
+                        </tr>
+                        <tr>
+                            <td>Exposure (R)</td>
+                            <td>Air Dose (Gy)</td>
+                            <td>0.870 × 10⁻² Gy/R</td>
+                            <td>D = X × 0.00870</td>
+                        </tr>
+                        <tr>
+                            <td>Air Kerma</td>
+                            <td>Tissue Dose</td>
+                            <td>f-factor (≈1.06)</td>
+                            <td>D = K × f</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span>🧮 Bragg-Gray Cavity Theory</span>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="concept-box">
+                    <h3>Fundamental Principle</h3>
+                    <p>The Bragg-Gray cavity theory relates the dose in a medium to the dose in a small cavity (detector) within that medium.</p>
+                </div>
+                
+                <div class="item">
+                    <div class="question">Bragg-Gray Conditions:</div>
+                    <div class="answer">1. Cavity is small enough not to disturb charged particle fluence<br>
+                    2. Dose in cavity is due entirely to charged particles crossing it<br>
+                    3. Charged particles originate in the medium, not in cavity walls</div>
+                </div>
+                
+                <div class="item">
+                    <div class="question">Cavity Size Requirements:</div>
+                    <div class="answer">• Much smaller than range of charged particles<br>
+                    • Large enough for charged particle equilibrium<br>
+                    • Typical: 0.1 to 0.5 times electron range</div>
+                </div>
+                
+                <div class="item">
+                    <div class="question">Basic Bragg-Gray Equation:</div>
+                    <div class="answer formula">D_medium = D_cavity × (S̄/ρ)^medium_cavity</div>
+                </div>
+                
+                <div class="item">
+                    <div class="question">Mass Stopping Power Ratio:</div>
+                    <div class="answer formula">(S̄/ρ)^medium_cavity = (1/ρ_cavity) × ∫[S(E)/ρ_medium] × φ(E) dE / ∫φ(E) dE</div>
+                </div>
+                
+                <div class="item">
+                    <div class="question">Where φ(E) represents:</div>
+                    <div class="answer">Energy spectrum of charged particles in the medium</div>
+                </div>
+                
+                <div class="item">
+                    <div class="question">For Monoenergetic Beam:</div>
+                    <div class="answer formula">D_medium = D_cavity × (S/ρ)^medium_cavity</div>
+                </div>
+                
+                <div class="highlight">
+                    <strong>Key Insight:</strong> The cavity dose is measured, the stopping power ratio is calculated/tabulated, and the medium dose is determined. This is the foundation of ionization chamber dosimetry.
+                </div>
+                
+                <div class="item">
+                    <div class="question">Practical Application - Ion Chamber:</div>
+                    <div class="answer">Gas cavity (air) in tissue-equivalent wall material<br>
+                    Measured: Ionization in air<br>
+                    Calculated: Dose to tissue</div>
+                </div>
+                
+                <div class="item">
+                    <div class="question">Air to Tissue Stopping Power Ratio:</div>
+                    <div class="answer">(S̄/ρ)^tissue_air ≈ 1.13 (for Co-60)<br>
+                    (S̄/ρ)^tissue_air ≈ 1.11 (for Cs-137)</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span>⚡ Spencer-Attix Theory</span>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="concept-box">
+                    <h3>Extension of Bragg-Gray Theory</h3>
+                    <p>Spencer-Attix theory accounts for delta rays (energetic secondary electrons) that may escape the cavity.</p>
+                </div>
+                
+                <div class="item">
+                    <div class="question">Why Spencer-Attix?</div>
+                    <div class="answer">Bragg-Gray assumes all energy is deposited locally. Spencer-Attix separates energy lost to δ-rays above cutoff energy Δ</div>
+                </div>
+                
+                <div class="item">
+                    <div class="question">Cutoff Energy (Δ):</div>
+                    <div class="answer">Energy threshold - δ-rays above Δ can escape cavity<br>
+                    Typical: Δ = 10 keV for air cavities</div>
+                </div>
+                
+                <div class="item">
+                    <div class="question">Spencer-Attix Equation:</div>
+                    <div class="answer formula">D_medium = D_cavity × (L̄_Δ/ρ)^medium_cavity</div>
+                </div>
+                
+                <div class="item">
+                    <div class="question">Restricted Stopping Power:</div>
+                    <div class="answer formula">L_Δ = S - S_Δ<br>where S_Δ = energy lost to δ-rays > Δ</div>
+                </div>
+                
+                <div class="item">
+                    <div class="question">Relationship to Bragg-Gray:</div>
+                    <div class="answer">When Δ → ∞: L_Δ → L (collision stopping power)<br>
+                    When Δ → 0: L_Δ → S (total stopping power)</div>
+                </div>
+                
+                <div class="item">
+                    <div class="question">Practical Difference:</div>
+                    <div class="answer">(L̄_Δ/ρ) vs (S̄/ρ) differ by ~1-2% for typical conditions<br>
+                    Spencer-Attix more accurate for small cavities</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span>🔬 Practical Applications & Examples</span>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="item">
+                    <div class="question">Example 1: Exposure to Tissue Dose</div>
+                    <div class="answer">Given: X = 1 R exposure in air<br>
+                    Find: Dose to soft tissue<br>
+                    Solution: D = 1 R × 0.00870 Gy/R × 1.06 = 0.0092 Gy</div>
+                </div>
+                
+                <div class="item">
+                    <div class="question">Example 2: Ion Chamber Reading</div>
+                    <div class="answer">Chamber reading: 100 nC<br>
+                    Air mass in cavity: 1 g<br>
+                    Exposure: X = (100×10⁻⁹ C)/(1×10⁻³ kg) = 10⁻⁴ C/kg<br>
+                    = 0.388 R</div>
+                </div>
+                
+                <div class="item">
+                    <div class="question">Example 3: Bragg-Gray Application</div>
+                    <div class="answer">Air cavity dose: 1 mGy<br>
+                    (S̄/ρ)^tissue_air = 1.13<br>
+                    Tissue dose: D = 1 mGy × 1.13 = 1.13 mGy</div>
+                </div>
+                
+                <div class="highlight">
+                    <strong>Clinical Significance:</strong><br>
+                    • Calibration of radiation therapy machines<br>
+                    • Patient dose calculations<br>
+                    • Radiation protection measurements<br>
+                    • Quality assurance procedures
+                </div>
+                
+                <div class="item">
+                    <div class="question">Modern Dosimetry Protocol:</div>
+                    <div class="answer">1. Measure air kerma with calibrated chamber<br>
+                    2. Apply beam quality correction factors<br>
+                    3. Convert to dose using stopping power ratios<br>
+                    4. Apply clinical corrections (temperature, pressure)</div>
+                </div>
+                
+                <div class="item">
+                    <div class="question">Common Uncertainties:</div>
+                    <div class="answer">Calibration: ±1%<br>
+                    Stopping power ratios: ±1%<br>
+                    Beam quality: ±0.5%<br>
+                    Environmental: ±0.5%<br>
+                    Combined: ±2% (1σ)</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span>📝 Quick Reference & Summary</span>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="concept-box">
+                    <h3>Essential Formulas Summary</h3>
+                </div>
+                
+                <div class="formula">
+                    <strong>Basic Conversions:</strong><br>
+                    K_air = X × 33.97 J/C<br>
+                    D_air = K_air × (1 - g̅)<br>
+                    D_tissue = D_air × f<br>
+                    D_medium = D_cavity × (S̄/ρ)^medium_cavity
+                </div>
+                
+                <div class="formula">
+                    <strong>Key Constants:</strong><br>
+                    W_air = 33.97 J/C<br>
+                    1 R = 2.58 × 10⁻⁴ C/kg<br>
+                    f_tissue = 1.06 (typical)<br>
+                    (S̄/ρ)^tissue_air ≈ 1.13 (Co-60)
+                </div>
+                
+                <div class="highlight">
+                    <strong>Remember:</strong><br>
+                    • Exposure → only defined in air<br>
+                    • Kerma → energy transferred to charged particles<br>
+                    • Absorbed dose → energy actually deposited<br>
+                    • Bragg-Gray → foundation of ionization dosimetry
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let quizMode = false;
+        
+        function toggleSection(header) {
+            const section = header.parentElement;
+            section.classList.toggle('active');
+        }
+        
+        function toggleQuizMode() {
+            quizMode = !quizMode;
+            const answers = document.querySelectorAll('.answer');
+            
+            answers.forEach(answer => {
+                if (quizMode) {
+                    answer.classList.add('hidden');
+                } else {
+                    answer.classList.remove('hidden');
+                }
+            });
+            
+            const btn = event.target;
+            btn.textContent = quizMode ? 'Exit Quiz Mode' : 'Toggle Quiz Mode';
+        }
+        
+        function showAllAnswers() {
+            const answers = document.querySelectorAll('.answer');
+            answers.forEach(answer => {
+                answer.classList.remove('hidden');
+            });
+            quizMode = false;
+            document.querySelector('.quiz-btn').textContent = 'Toggle Quiz Mode';
+        }
+        
+        function hideAllAnswers() {
+            const answers = document.querySelectorAll('.answer');
+            answers.forEach(answer => {
+                answer.classList.add('hidden');
+            });
+            quizMode = true;
+            document.querySelector('.quiz-btn').textContent = 'Exit Quiz Mode';
+        }
+        
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('answer') && e.target.classList.contains('hidden')) {
+                e.target.classList.remove('hidden');
+            }
+        });
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const sections = document.querySelectorAll('.section');
+            sections.forEach((section, index) => {
+                if (index === 0) {
+                    section.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
