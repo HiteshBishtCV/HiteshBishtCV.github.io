@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Essential Medical Physics Reports</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+        }
+        
+        .controls {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .search-box {
+            width: 100%;
+            max-width: 400px;
+            padding: 12px 20px;
+            font-size: 16px;
+            border: 2px solid #e0e6ed;
+            border-radius: 25px;
+            margin-bottom: 20px;
+            transition: border-color 0.3s;
+        }
+        
+        .search-box:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .back-btn {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 20px;
+            transition: background 0.3s;
+        }
+        
+        .back-btn:hover {
+            background: #5a6268;
+            text-decoration: none;
+            color: white;
+        }
+        
+        .section {
+            background: white;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .section-header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px 20px;
+            font-size: 1.4em;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .section-content {
+            padding: 20px;
+            display: none;
+        }
+        
+        .section.active .section-content {
+            display: block;
+        }
+        
+        .reports-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        
+        .reports-table th {
+            background: #f8f9fa;
+            border: 2px solid #dee2e6;
+            padding: 12px 8px;
+            text-align: left;
+            font-weight: bold;
+            color: #495057;
+            position: sticky;
+            top: 0;
+        }
+        
+        .reports-table td {
+            border: 1px solid #dee2e6;
+            padding: 10px 8px;
+            vertical-align: top;
+        }
+        
+        .reports-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        .reports-table tr:hover {
+            background: #e3f2fd;
+            transform: scale(1.01);
+            transition: all 0.2s ease;
+        }
+        
+        .report-number {
+            font-weight: bold;
+            color: #667eea;
+            white-space: nowrap;
+            min-width: 80px;
+        }
+        
+        .report-name {
+            font-weight: 600;
+            color: #2c3e50;
+            min-width: 200px;
+        }
+        
+        .report-description {
+            color: #6c757d;
+            line-height: 1.4;
+        }
+        
+        .toggle-icon {
+            transition: transform 0.3s;
+        }
+        
+        .section.active .toggle-icon {
+            transform: rotate(180deg);
+        }
+        
+        .highlight {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        
+        .category-intro {
+            background: #e8f4fd;
+            border: 2px solid #667eea;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+        
+        .subsection-title {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            color: white;
+            padding: 8px 15px;
+            margin: 20px 0 10px 0;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .section-header {
+                font-size: 1.2em;
+            }
+            
+            .reports-table {
+                font-size: 0.9em;
+            }
+            
+            .reports-table th,
+            .reports-table td {
+                padding: 8px 4px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="../index.html" class="back-btn">← Back to Knowledge Base</a>
+        
+        <h1>📋 Essential Medical Physics Reports</h1>
+        
+        <div class="controls">
+            <input type="text" class="search-box" placeholder="🔍 Search reports..." id="searchBox">
+        </div>
+        
+        <div class="highlight">
+            <strong>Quick Navigation:</strong> Click on any section header to expand/collapse. Use search to find specific reports by number or topic.
+        </div>
+        
+        <div class="section active">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span>🇺🇸 AAPM Task Group Reports (TG)</span>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="category-intro">
+                    <strong>American Association of Physicists in Medicine (AAPM)</strong> - Task Group reports providing clinical guidance and protocols for medical physics practice.
+                </div>
+                
+                <table class="reports-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 15%;">Number</th>
+                            <th style="width: 45%;">Name</th>
+                            <th style="width: 40%;">Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="report-number">TG-51</td>
+                            <td class="report-name">Protocol for Clinical Reference Dosimetry of High-Energy Photon and Electron Beams</td>
+                            <td class="report-description">Gold standard for absolute dose calibration in radiotherapy using ion chambers</td>
+                        </tr>
+                        <tr>
+                            <td class="report-number">TG-40</td>
+                            <td class="report-name">Comprehensive QA for Radiation Oncology</td>
+                            <td class="report-description">Foundation document for quality assurance programs in radiation therapy</td>
+                        </tr>
+                        <tr>
+                            <td class="report-number">TG-142</td>
+                            <td class="report-name">Quality Assurance of Medical Accelerators</td>
+                            <td class="report-description">Updated QA procedures for modern linear accelerators and advanced techniques</td>
+                        </tr>
+                        <tr>
+                            <td class="report-number">TG-100</td>
+                            <td class="report-name">Application of Risk Analysis Methods to Radiation Therapy Quality Management</td>
+                            <td class="report-description">Risk-based approach to QA using failure modes and effects analysis (FMEA)</td>
+                        </tr>
+                        <tr>
+                            <td class="report-number">TG-263</td>
+                            <td class="report-name">Standardizing Nomenclatures in Radiation Oncology</td>
+                            <td class="report-description">Standardized naming conventions for organs at risk and target volumes</td>
+                        </tr>
+                        <tr>
+                            <td class="report-number">TG-101</td>
+                            <td class="report-name">Stereotactic Body Radiation Therapy</td>
+                            <td class="report-description">Clinical implementation and QA for SBRT treatments</td>
+                        </tr>
+                        <tr>
+                            <td class="report-number">TG-106</td>
+                            <td class="report-name">Accelerator Beam Data Commissioning Equipment and Procedures</td>
+                            <td class="report-description">Standardized methods for measuring and modeling beam data for treatment planning</td>
+                        </tr>
+                        <tr>
+                            <td class="report-number">TG-119</td>
+                            <td class="report-name">IMRT Commissioning: Multiple Institution Planning and Dosimetry Comparisons</td>
+                            <td class="report-description">Benchmark cases and procedures for IMRT commissioning and validation</td>
+                        </tr>
+                        <tr>
+                            <td class="report-number">TG-218</td>
+                            <td class="report-name">Tolerance Limits and Methodologies for Secondary Dose Calculations</td>
+                            <td class="report-description">Guidelines for independent dose calculation and verification systems</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="subsection-title">Brachytherapy Task Groups</div>
+                <table class="reports-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 15%;">Number</th>
+                            <th style="width: 45%;">Name</th>
+                            <th style="width: 40%;">Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="report-number">TG-43</td>
+                            <td class="report-name">Dosimetry of Interstitial Brachytherapy Sources</td>
+                            <td class="report-description">Foundation protocol for brachytherapy source dosimetry and dose calculation formalism</td>
+                        </tr>
+                        <tr>
+                            <td class="report-number">TG-56</td>
+                            <td class="report-name">Code of Practice for Brachytherapy Physics</td>
+                            <td class="report-description">Comprehensive QA program for all aspects of brachytherapy physics</td>
+                        </tr>
+                        <tr>
+                            <td class="report-number">TG-138</td>
+                            <td class="report-name">Dosimetry of Cesium-131 Seeds</td>
+                            <td class="report-description">Specific dosimetric parameters and clinical implementation for Cs-131 sources</td>
+                        </tr>
+                        <tr>
+                            <td class="report-number">TG-186</td>
+                            <td class="report-name">Model-Based Dose Calculation Methods in Brachytherapy</td>
+                            <td class="report-description">Advanced dose calculation algorithms beyond TG-43 formalism for heterogeneous media</td>
+                        </tr>
+                        <tr>
+                            <td class="report-number">TG-229</td>
+                            <td class="report-name">Cesium-131 Brachytherapy Source Dosimetry</td>
+                            <td class="report-description">Updated dosimetric characterization and clinical protocols for Cs-131 seeds</td>
+                        </tr>
+                        <tr>
+                            <td class="report-number">TG-167</td>
+                            <td class="report-name">Permanent Prostate Seed Implant Brachytherapy</td>
+                            <td class="report-description">Clinical implementation and QA for permanent seed implant procedures</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span>🌍 IAEA Technical Reports Series (TRS)</span>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="category-intro">
+                    <strong>International Atomic Energy Agency (IAEA)</strong> - Comprehensive technical guidance for radiation oncology physics worldwide.
+                </div>
+                
+                <table class="reports-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 15%;">Number</th>
+                            <th style="width: 45%;">Name</th>
+                            <th style="width: 40%;">Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="report-number">TRS-398</td>
+                            <td class="report-name">Absorbed Dose Determination in External Beam Radiotherapy</td>
+                            <td class="report-description">International protocol for reference dosimetry using ion chambers</td>
+                        </tr>
+                        <tr>
+                            <td class="report-number">TRS-483</td>
+                            <td class="report-name">Dosimetry of Small Static Fields Used in External Beam Radiotherapy</td>
+                            <td class="report-description">Comprehensive guide for small field dosimetry in SRS/SRT applications</td>
+                        </tr>
+                        <tr>
+                            <td class="report-number">TRS-430</td>
+                            <td class="report-name">Commissioning and Quality Assurance of Computerized Planning Systems</td>
+                            <td class="report-description">Guidelines for treatment planning system commissioning and ongoing QA</td>
+                        </tr>
+                        <tr>
+                            <td class="report-number">TRS-381</td>
+                            <td class="report-name">The Use of Plane Parallel Ionization Chambers in High-Energy Electron and Photon Beams</td>
+                            <td class="report-description">Specialized dosimetry protocols for plane parallel chambers</td>
+                        </tr>
+                        <tr>
+                            <td class="report-number">TRS-277</td>
+                            <td class="report-name">Absorbed Dose Determination in Photon and Electron Beams</td>
+                            <td class="report-description">Earlier international dosimetry protocol (predecessor to TRS-398)</td>
+                        </tr>
+                        <tr>
+                            <td class="report-number">TRS-469</td>
+                            <td class="report-name">Calibration of Reference Dosimeters for External Beam Radiotherapy</td>
+                            <td class="report-description">Standards and procedures for dosimeter calibration services</td>
+                        </tr>
+                        <tr>
+                            <td class="report-number">TRS-1274</td>
+                            <td class="report-name">Handbook of Nuclear Data for Brachytherapy</td>
+                            <td class="report-description">Comprehensive nuclear decay data and dosimetric parameters for brachytherapy sources</td>
+                        </tr>
+                        <tr>
+                            <td class="report-number">TRS-1267</td>
+                            <td class="report-name">Dosimetry in Diagnostic Radiology for Paediatric Patients</td>
+                            <td class="report-description">Special considerations for pediatric radiation dosimetry and protection</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span>📖 IAEA Technical Documents (TECDOC)</span>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="category-intro">
+                    <strong>IAEA Technical Documents</strong> - Practical guidance and recommendations for specific aspects of radiotherapy physics.
+                </div>
+                
+                <table class="reports-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 15%;">Number</th>
+                            <th style="width: 45%;">Name</th>
+                            <th style="width: 40%;">Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="report-number">TECDOC-1540</td>
+                            <td class="report-name">Specification and Acceptance Testing of Radiotherapy Treatment Planning Systems</td>
+                            <td class="report-description">Comprehensive testing procedures for TPS acceptance and commissioning</td>
+                        </tr>
+                        <tr>
+                            <td class="report-number">TECDOC-1583</td>
+                            <td class="report-name">Commissioning of Radiotherapy Treatment Planning Systems</td>
+                            <td class="report-description">Detailed procedures for clinical commissioning of treatment planning systems</td>
+                        </tr>
+                        <tr>
+                            <td class="report-number">TECDOC-1151</td>
+                            <td class="report-name">Aspects of the Clinical Use of Intensity-Modulated Radiotherapy</td>
+                            <td class="report-description">Early guidance on IMRT implementation and clinical considerations</td>
+                        </tr>
+                        <tr>
+                            <td class="report-number">TECDOC-1732</td>
+                            <td class="report-name">Accuracy Requirements and Uncertainties in Radiotherapy</td>
+                            <td class="report-description">Framework for understanding and managing uncertainties in radiation therapy</td>
+                        </tr>
+                        <tr>
+                            <td class="report-number">TECDOC-1455</td>
+                            <td class="report-name">Implementation of the International Code of Practice on Dosimetry in Radiotherapy</td>
+                            <td class="report-description">Practical guidance for implementing TRS-398 dosimetry protocols</td>
+                        </tr>
+                        <tr>
+                            <td class="report-number">TECDOC-1181</td>
+                            <td class="report-name">Calibration of Dosimeters Used in Radiotherapy</td>
+                            <td class="report-description">Technical requirements for establishing dosimeter calibration capabilities</td>
+                        </tr>
+                        <tr>
+                            <td class="report-number">TECDOC-1274</td>
+                            <td class="report-name">Calibration of Photon and Beta Ray Sources Used in Brachytherapy</td>
+                            <td class="report-description">Guidelines for brachytherapy source calibration and traceability to primary standards</td>
+                        </tr>
+                        <tr>
+                            <td class="report-number">TECDOC-1040</td>
+                            <td class="report-name">Aspects of the Clinical Use of Brachytherapy</td>
+                            <td class="report-description">Comprehensive overview of clinical brachytherapy applications and physics considerations</td>
+                        </tr>
+                        <tr>
+                            <td class="report-number">TECDOC-1156</td>
+                            <td class="report-name">Radiological Safety Aspects of the Operation of Electron Linear Accelerators</td>
+                            <td class="report-description">Safety protocols and shielding design for electron beam facilities</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span>⚡ IEC Standards</span>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="category-intro">
+                    <strong>International Electrotechnical Commission (IEC)</strong> - Safety and performance standards for medical electrical equipment in radiotherapy.
+                </div>
+                
+                <table class="reports-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 15%;">Number</th>
+                            <th style="width: 45%;">Name</th>
+                            <th style="width: 40%;">Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="report-number">IEC 60601</td>
+                            <td class="report-name">Medical Electrical Equipment - General Requirements for Basic Safety and Essential Performance</td>
+                            <td class="report-description">Foundation standard for all medical electrical equipment safety requirements</td>
+                        </tr>
+                        <tr>
+                            <td class="report-number">IEC 60601-2-1</td>
+                            <td class="report-name">Medical Electrical Equipment - Particular Requirements for Safety of Electron Accelerators</td>
+                            <td class="report-description">Safety standards and performance requirements for medical linear accelerators</td>
+                        </tr>
+                        <tr>
+                            <td class="report-number">IEC 60976</td>
+                            <td class="report-name">Medical Electrical Equipment - Medical Electron Accelerators in the Range 1 MeV to 50 MeV</td>
+                            <td class="report-description">Functional performance standards for medical electron accelerators and associated equipment</td>
+                        </tr>
+                        <tr>
+                            <td class="report-number">IEC 61005</td>
+                            <td class="report-name">Radiation Protection Instrumentation - Neutron Ambient Dose Equivalent Rate Meters</td>
+                            <td class="report-description">Performance requirements for neutron dose rate monitoring around high-energy accelerators</td>
+                        </tr>
+                        <tr>
+                            <td class="report-number">IEC 61168</td>
+                            <td class="report-name">Nuclear Instrumentation - Listmode Digitizers for Radiation Detectors</td>
+                            <td class="report-description">Specifications for digital data acquisition systems in nuclear medicine and dosimetry</td>
+                        </tr>
+                        <tr>
+                            <td class="report-number">IEC 61170</td>
+                            <td class="report-name">Qualification and Characterization of Semiconductor Radiation Detectors</td>
+                            <td class="report-description">Testing procedures for semiconductor detectors used in medical radiation measurements</td>
+                        </tr>
+                        <tr>
+                            <td class="report-number">IEC 61217</td>
+                            <td class="report-name">Radiotherapy Equipment - Coordinates, Movements and Scales</td>
+                            <td class="report-description">Standardized coordinate systems and movement definitions for radiotherapy equipment</td>
+                        </tr>
+                        <tr>
+                            <td class="report-number">IEC 62083</td>
+                            <td class="report-name">Medical Electrical Equipment - Requirements for the Safety of Radiotherapy Treatment Planning Systems</td>
+                            <td class="report-description">Safety and performance requirements for treatment planning software systems</td>
+                        </tr>
+                        <tr>
+                            <td class="report-number">IEC 62274</td>
+                            <td class="report-name">Medical Electrical Equipment - Safety Requirements for Radiotherapy Record and Verify Systems</td>
+                            <td class="report-description">Safety standards for record and verify systems that monitor treatment delivery parameters</td>
+                        </tr>
+                        <tr>
+                            <td class="report-number">IEC 60601-2-11</td>
+                            <td class="report-name">Medical Electrical Equipment - Particular Requirements for Gamma Beam Therapy Equipment</td>
+                            <td class="report-description">Safety and performance standards for gamma ray therapy units (Co-60, Cs-137)</td>
+                        </tr>
+                        <tr>
+                            <td class="report-number">IEC 60601-2-64</td>
+                            <td class="report-name">Medical Electrical Equipment - Particular Requirements for Light Ion Beam Medical Electrical Equipment</td>
+                            <td class="report-description">Safety standards for proton and carbon ion therapy systems</td>
+                        </tr>
+                        <tr>
+                            <td class="report-number">IEC 60731</td>
+                            <td class="report-name">Medical Electrical Equipment - Dosimeters with Ionization Chambers</td>
+                            <td class="report-description">Performance and safety requirements for dosimetry systems used in radiotherapy</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="subsection-title">Brachytherapy IEC Standards</div>
+                <table class="reports-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 15%;">Number</th>
+                            <th style="width: 45%;">Name</th>
+                            <th style="width: 40%;">Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="report-number">IEC 60601-2-17</td>
+                            <td class="report-name">Medical Electrical Equipment - Particular Requirements for Remote-Controlled Brachytherapy Afterloading Equipment</td>
+                            <td class="report-description">Safety and performance standards for HDR/PDR brachytherapy afterloading systems</td>
+                        </tr>
+                        <tr>
+                            <td class="report-number">IEC 62494-1</td>
+                            <td class="report-name">Medical Electrical Equipment - Exposure Control in Radiography and Radioscopy - Part 1: General Requirements</td>
+                            <td class="report-description">Exposure control systems for medical imaging equipment including image-guided brachytherapy</td>
+                        </tr>
+                        <tr>
+                            <td class="report-number">IEC 61145</td>
+                            <td class="report-name">Calibration and Usage of Ionization Chamber Systems for Assessing Patient Dose</td>
+                            <td class="report-description">Standardized procedures for ionization chamber calibration in brachytherapy applications</td>
+                        </tr>
+                        <tr>
+                            <td class="report-number">IEC 60601-2-8</td>
+                            <td class="report-name">Medical Electrical Equipment - Particular Requirements for Therapeutic X-ray Equipment</td>
+                            <td class="report-description">Safety standards for therapeutic X-ray units including electronic brachytherapy devices</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span>📏 ICRU & ICRP Reports</span>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="category-intro">
+                    <strong>ICRU:</strong> International Commission on Radiation Units and Measurements<br>
+                    <strong>ICRP:</strong> International Commission on Radiological Protection
+                </div>
+                
+                <div class="subsection-title">ICRU Reports</div>
+                <table class="reports-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 15%;">Number</th>
+                            <th style="width: 45%;">Name</th>
+                            <th style="width: 40%;">Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="report-number">ICRU-50</td>
+                            <td class="report-name">Prescribing, Recording and Reporting Photon Beam Therapy</td>
+                            <td class="report-description">Fundamental definitions of target volumes (GTV, CTV, PTV) and dose specification</td>
+                        </tr>
+                        <tr>
+                            <td class="report-number">ICRU-62</td>
+                            <td class="report-name">Prescribing, Recording and Reporting Photon Beam Therapy (Supplement to ICRU-50)</td>
+                            <td class="report-description">Additional guidance on dose-volume relationships and treatment technique documentation</td>
+                        </tr>
+                        <tr>
+                            <td class="report-number">ICRU-71</td>
+                            <td class="report-name">Prescribing, Recording and Reporting Electron Beam Therapy</td>
+                            <td class="report-description">Standardized approach for electron beam treatment prescription and documentation</td>
+                        </tr>
+                        <tr>
+                            <td class="report-number">ICRU-78</td>
+                            <td class="report-name">Prescribing, Recording and Reporting Proton-Beam Therapy</td>
+                            <td class="report-description">Guidelines for proton therapy prescription, recording, and reporting practices</td>
+                        </tr>
+                        <tr>
+                            <td class="report-number">ICRU-83</td>
+                            <td class="report-name">Prescribing, Recording and Reporting Photon-Beam Intensity-Modulated Radiation Therapy</td>
+                            <td class="report-description">Specific guidance for IMRT treatment prescription and plan evaluation</td>
+                        </tr>
+                        <tr>
+                            <td class="report-number">ICRU-91</td>
+                            <td class="report-name">Prescribing, Recording and Reporting of Stereotactic Treatments with Small Photon Beams</td>
+                            <td class="report-description">Guidelines for stereotactic radiosurgery and radiotherapy documentation</td>
+                        </tr>
+                        <tr>
+                            <td class="report-number">ICRU-58</td>
+                            <td class="report-name">Dose and Volume Specification for Reporting Intracavitary Therapy in Gynecology</td>
+                            <td class="report-description">Standardized approach for dose specification and reporting in gynecological brachytherapy</td>
+                        </tr>
+                        <tr>
+                            <td class="report-number">ICRU-89</td>
+                            <td class="report-name">Prescribing, Recording, and Reporting Brachytherapy for Cancer of the Cervix</td>
+                            <td class="report-description">Modern guidelines for cervical cancer brachytherapy using 3D image-based planning</td>
+                        </tr>
+                        <tr>
+                            <td class="report-number">ICRU-72</td>
+                            <td class="report-name">Dosimetry of Beta Rays and Low-Energy Photons for Brachytherapy with Sealed Sources</td>
+                            <td class="report-description">Comprehensive dosimetric methodology for low-energy brachytherapy sources</td>
+                        </tr>
+                        <tr>
+                            <td class="report-number">ICRU-38</td>
+                            <td class="report-name">Dose and Volume Specification for Reporting Intracavitary Therapy in Gynecology</td>
+                            <td class="report-description">Earlier foundational report for gynecological brachytherapy (predecessor to ICRU-58)</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="subsection-title">ICRP Reports</div>
+                <table class="reports-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 15%;">Number</th>
+                            <th style="width: 45%;">Name</th>
+                            <th style="width: 40%;">Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="report-number">ICRP-103</td>
+                            <td class="report-name">The 2007 Recommendations of the International Commission on Radiological Protection</td>
+                            <td class="report-description">Current foundation for radiation protection principles and dose limits</td>
+                        </tr>
+                        <tr>
+                            <td class="report-number">ICRP-105</td>
+                            <td class="report-name">Radiological Protection in Medicine</td>
+                            <td class="report-description">Comprehensive guidance on radiation protection in medical applications</td>
+                        </tr>
+                        <tr>
+                            <td class="report-number">ICRP-112</td>
+                            <td class="report-name">Preventing Accidental Exposures from New External Beam Radiation Therapy Technologies</td>
+                            <td class="report-description">Safety recommendations for advanced radiotherapy techniques and technologies</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function toggleSection(header) {
+            const section = header.parentElement;
+            section.classList.toggle('active');
+        }
+        
+        // Search functionality
+        document.getElementById('searchBox').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const reportRows = document.querySelectorAll('.reports-table tbody tr');
+            
+            reportRows.forEach(row => {
+                const number = row.cells[0].textContent.toLowerCase();
+                const title = row.cells[1].textContent.toLowerCase();
+                const description = row.cells[2].textContent.toLowerCase();
+                
+                if (number.includes(searchTerm) || title.includes(searchTerm) || description.includes(searchTerm)) {
+                    row.style.display = '';
+                    // Show the parent section
+                    const section = row.closest('.section');
+                    section.classList.add('active');
+                } else {
+                    row.style.display = searchTerm === '' ? '' : 'none';
+                }
+            });
+            
+            // If search is cleared, show all rows and close sections
+            if (searchTerm === '') {
+                const sections = document.querySelectorAll('.section');
+                sections.forEach(section => {
+                    section.classList.remove('active');
+                });
+                // Keep first section open by default
+                sections[0].classList.add('active');
+            }
+        });
+        
+        // Initialize - show first section
+        document.addEventListener('DOMContentLoaded', function() {
+            const sections = document.querySelectorAll('.section');
+            sections.forEach((section, index) => {
+                if (index === 0) {
+                    section.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
