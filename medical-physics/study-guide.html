@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Physics Exam Study Guide</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+        }
+        
+        .controls {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .quiz-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 0 10px;
+            transition: transform 0.2s;
+        }
+        
+        .quiz-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .back-btn {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 20px;
+            transition: background 0.3s;
+        }
+        
+        .back-btn:hover {
+            background: #5a6268;
+            text-decoration: none;
+            color: white;
+        }
+        
+        .section {
+            background: white;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .section-header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px 20px;
+            font-size: 1.3em;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .section-content {
+            padding: 20px;
+            display: none;
+        }
+        
+        .section.active .section-content {
+            display: block;
+        }
+        
+        .item {
+            margin-bottom: 15px;
+            padding: 15px;
+            border-left: 4px solid #667eea;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .question {
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #2c3e50;
+        }
+        
+        .answer {
+            color: #495057;
+            font-family: 'Courier New', monospace;
+            background: #e9ecef;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+        
+        .answer.hidden {
+            background: #6c757d;
+            color: transparent;
+            user-select: none;
+            cursor: pointer;
+        }
+        
+        .answer.hidden:hover {
+            background: #5a6268;
+        }
+        
+        .answer.hidden::after {
+            content: "Click to reveal";
+            color: white;
+            font-style: italic;
+            font-family: sans-serif;
+        }
+        
+        .formula {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .highlight {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 10px;
+            border-radius: 6px;
+            margin: 10px 0;
+        }
+        
+        .toggle-icon {
+            transition: transform 0.3s;
+        }
+        
+        .section.active .toggle-icon {
+            transform: rotate(180deg);
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .quiz-btn {
+                display: block;
+                margin: 10px auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="../index.html" class="back-btn">← Back to Knowledge Base</a>
+        
+        <h1>⚕️ Medical Physics Exam Study Guide</h1>
+        
+        <div class="controls">
+            <button class="quiz-btn" onclick="toggleQuizMode()">Toggle Quiz Mode</button>
+            <button class="quiz-btn" onclick="showAllAnswers()">Show All Answers</button>
+            <button class="quiz-btn" onclick="hideAllAnswers()">Hide All Answers</button>
+        </div>
+        
+        <div class="section active">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span>📐 Unit Conversions & Constants</span>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="item">
+                    <div class="question">1 Roentgen (R) to Gray (Gy):</div>
+                    <div class="answer">1 R = 0.008 Gy</div>
+                </div>
+                <div class="item">
+                    <div class="question">1 Curie (Ci) to Becquerel (Bq):</div>
+                    <div class="answer">1 Ci = 3.7 × 10¹⁰ Bq</div>
+                </div>
+                <div class="item">
+                    <div class="question">Avogadro's Number:</div>
+                    <div class="answer">Nₐ = 6.022 × 10²³ mol⁻¹</div>
+                </div>
+                <div class="item">
+                    <div class="question">Speed of Light:</div>
+                    <div class="answer">c = 3 × 10⁸ m/s</div>
+                </div>
+                <div class="item">
+                    <div class="question">Electron Rest Mass Energy:</div>
+                    <div class="answer">mₑc² = 0.511 MeV</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span>☢️ Radioisotope Properties</span>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="item">
+                    <div class="question">Comparative Properties Table:</div>
+                    <div class="answer">
+                        <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+                            <thead>
+                                <tr style="background: #667eea; color: white;">
+                                    <th style="padding: 10px; border: 1px solid #ddd;">Property</th>
+                                    <th style="padding: 10px; border: 1px solid #ddd;">⁶⁰Co</th>
+                                    <th style="padding: 10px; border: 1px solid #ddd;">¹³⁷Cs</th>
+                                    <th style="padding: 10px; border: 1px solid #ddd;">¹⁹²Ir</th>
+                                    <th style="padding: 10px; border: 1px solid #ddd;">¹³¹I</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold;">Half-life</td>
+                                    <td style="padding: 8px; border: 1px solid #ddd;">5.27 years</td>
+                                    <td style="padding: 8px; border: 1px solid #ddd;">30.17 years</td>
+                                    <td style="padding: 8px; border: 1px solid #ddd;">73.83 days</td>
+                                    <td style="padding: 8px; border: 1px solid #ddd;">8.02 days</td>
+                                </tr>
+                                <tr style="background: #f8f9fa;">
+                                    <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold;">TVT in Lead</td>
+                                    <td style="padding: 8px; border: 1px solid #ddd;">12 mm Pb</td>
+                                    <td style="padding: 8px; border: 1px solid #ddd;">6.5 mm Pb</td>
+                                    <td style="padding: 8px; border: 1px solid #ddd;">4.5 mm Pb</td>
+                                    <td style="padding: 8px; border: 1px solid #ddd;">3 mm Pb</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold;">Exposure Rate Constant (Γ)</td>
+                                    <td style="padding: 8px; border: 1px solid #ddd;">13.2 R·cm²/(h·mCi)</td>
+                                    <td style="padding: 8px; border: 1px solid #ddd;">3.3 R·cm²/(h·mCi)</td>
+                                    <td style="padding: 8px; border: 1px solid #ddd;">4.8 R·cm²/(h·mCi)</td>
+                                    <td style="padding: 8px; border: 1px solid #ddd;">2.2 R·cm²/(h·mCi)</td>
+                                </tr>
+                                <tr style="background: #f8f9fa;">
+                                    <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold;">Specific Activity</td>
+                                    <td style="padding: 8px; border: 1px solid #ddd;">1100 Ci/g</td>
+                                    <td style="padding: 8px; border: 1px solid #ddd;">87 Ci/g</td>
+                                    <td style="padding: 8px; border: 1px solid #ddd;">9000 Ci/g</td>
+                                    <td style="padding: 8px; border: 1px solid #ddd;">124,000 Ci/g</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold;">Decay Constant (λ)</td>
+                                    <td style="padding: 8px; border: 1px solid #ddd;">4.17 × 10⁻⁹ s⁻¹</td>
+                                    <td style="padding: 8px; border: 1px solid #ddd;">7.28 × 10⁻¹⁰ s⁻¹</td>
+                                    <td style="padding: 8px; border: 1px solid #ddd;">1.12 × 10⁻⁷ s⁻¹</td>
+                                    <td style="padding: 8px; border: 1px solid #ddd;">1.00 × 10⁻⁶ s⁻¹</td>
+                                </tr>
+                                <tr style="background: #f8f9fa;">
+                                    <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold;">Average Energy</td>
+                                    <td style="padding: 8px; border: 1px solid #ddd;">1.25 MeV</td>
+                                    <td style="padding: 8px; border: 1px solid #ddd;">0.662 MeV</td>
+                                    <td style="padding: 8px; border: 1px solid #ddd;">0.38 MeV</td>
+                                    <td style="padding: 8px; border: 1px solid #ddd;">0.364 MeV</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold;">HVL in Lead</td>
+                                    <td style="padding: 8px; border: 1px solid #ddd;">11 mm Pb</td>
+                                    <td style="padding: 8px; border: 1px solid #ddd;">6.5 mm Pb</td>
+                                    <td style="padding: 8px; border: 1px solid #ddd;">2.5 mm Pb</td>
+                                    <td style="padding: 8px; border: 1px solid #ddd;">2.2 mm Pb</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span>🔄 Decay Schemes</span>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <h3>Cobalt-60 (⁶⁰Co)</h3>
+                <div class="item">
+                    <div class="question">Decay Mode:</div>
+                    <div class="answer">β⁻ decay to ⁶⁰Ni* → ⁶⁰Ni (stable)</div>
+                </div>
+                <div class="item">
+                    <div class="question">Beta Energy:</div>
+                    <div class="answer">E_max = 0.318 MeV (99.9%), E_avg = 0.096 MeV</div>
+                </div>
+                <div class="item">
+                    <div class="question">Gamma Emissions:</div>
+                    <div class="answer">1.173 MeV (100%) and 1.332 MeV (100%) in cascade</div>
+                </div>
+                <div class="item">
+                    <div class="question">Decay Scheme:</div>
+                    <div class="answer formula">⁶⁰Co → ⁶⁰Ni* + β⁻ + ν̄_e<br>⁶⁰Ni* → ⁶⁰Ni + γ(1.173) + γ(1.332)</div>
+                </div>
+                
+                <h3>Cesium-137 (¹³⁷Cs)</h3>
+                <div class="item">
+                    <div class="question">Decay Mode:</div>
+                    <div class="answer">β⁻ decay to ¹³⁷Ba* → ¹³⁷Ba (stable)</div>
+                </div>
+                <div class="item">
+                    <div class="question">Beta Energy:</div>
+                    <div class="answer">E_max = 0.514 MeV (94.4%), E_avg = 0.157 MeV</div>
+                </div>
+                <div class="item">
+                    <div class="question">Gamma Emissions:</div>
+                    <div class="answer">0.662 MeV (85.1%) from ¹³⁷Ba* (T₁/₂ = 2.55 min)</div>
+                </div>
+                <div class="item">
+                    <div class="question">Decay Scheme:</div>
+                    <div class="answer formula">¹³⁷Cs → ¹³⁷Ba* + β⁻ + ν̄_e (94.4%)<br>¹³⁷Cs → ¹³⁷Ba + β⁻ + ν̄_e (5.6%)<br>¹³⁷Ba* → ¹³⁷Ba + γ(0.662)</div>
+                </div>
+                
+                <h3>Iridium-192 (¹⁹²Ir)</h3>
+                <div class="item">
+                    <div class="question">Decay Modes:</div>
+                    <div class="answer">β⁻ (95.13%) to ¹⁹²Pt*, EC (4.87%) to ¹⁹²Os*</div>
+                </div>
+                <div class="item">
+                    <div class="question">Beta Energy (β⁻):</div>
+                    <div class="answer">E_max = 0.672 MeV, E_avg = 0.181 MeV</div>
+                </div>
+                <div class="item">
+                    <div class="question">Major Gamma Lines:</div>
+                    <div class="answer">0.296 MeV (28.7%), 0.308 MeV (29.7%), 0.317 MeV (83.0%)</div>
+                </div>
+                <div class="item">
+                    <div class="question">Decay Scheme:</div>
+                    <div class="answer formula">¹⁹²Ir → ¹⁹²Pt* + β⁻ + ν̄_e (95.13%)<br>¹⁹²Ir + e⁻ → ¹⁹²Os* + ν_e (4.87%)<br>Multiple γ transitions to ground states</div>
+                </div>
+                
+                <h3>Iodine-131 (¹³¹I) - High Dose Therapy</h3>
+                <div class="item">
+                    <div class="question">Decay Mode:</div>
+                    <div class="answer">β⁻ decay to ¹³¹Xe (stable)</div>
+                </div>
+                <div class="item">
+                    <div class="question">Beta Energy:</div>
+                    <div class="answer">E_max = 0.606 MeV (89.4%), E_avg = 0.192 MeV</div>
+                </div>
+                <div class="item">
+                    <div class="question">Gamma Emissions:</div>
+                    <div class="answer">0.364 MeV (81.7%), others: 0.637 MeV (7.2%), 0.284 MeV (6.1%)</div>
+                </div>
+                <div class="item">
+                    <div class="question">Decay Scheme:</div>
+                    <div class="answer formula">¹³¹I → ¹³¹Xe* + β⁻ + ν̄_e<br>¹³¹Xe* → ¹³¹Xe + γ(0.364) (81.7%)<br>Direct to ground state (18.3%)</div>
+                </div>
+                <div class="item">
+                    <div class="question">Therapeutic Use:</div>
+                    <div class="answer">β⁻ for tissue destruction, γ for imaging/dosimetry</div>
+                </div>
+                
+                <div class="highlight">
+                    <strong>Key Points:</strong><br>
+                    • β⁻ = Beta minus (electron + antineutrino)<br>
+                    • EC = Electron Capture<br>
+                    • * = Excited nuclear state<br>
+                    • Percentages show branching ratios<br>
+                    • Co-60: Pure gamma emitter (after β⁻)<br>
+                    • Cs-137: Mixed β⁻/γ with metastable state<br>
+                    • Ir-192: Complex spectrum, multiple pathways<br>
+                    • I-131: Therapeutic β⁻ + diagnostic γ
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span>📈 Radioactive Decay Formulas</span>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="item">
+                    <div class="question">Basic Decay Law (Number of atoms):</div>
+                    <div class="answer formula">N(t) = N₀e^(-λt)</div>
+                </div>
+                <div class="item">
+                    <div class="question">Activity Decay:</div>
+                    <div class="answer formula">A(t) = A₀e^(-λt)</div>
+                </div>
+                <div class="item">
+                    <div class="question">Decay Constant:</div>
+                    <div class="answer formula">λ = ln(2)/t₁/₂ = 0.693/t₁/₂</div>
+                </div>
+                <div class="item">
+                    <div class="question">Mean Life:</div>
+                    <div class="answer formula">τ = 1/λ = t₁/₂/ln(2) = 1.44 × t₁/₂</div>
+                </div>
+                <div class="item">
+                    <div class="question">Specific Activity:</div>
+                    <div class="answer formula">SA = λNₐ/A = 0.693 × Nₐ/(t₁/₂ × A)</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span>⚖️ Radioactive Equilibrium</span>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <h3>Transient Equilibrium</h3>
+                <div class="highlight">
+                    <strong>Example:</strong> ⁹⁹Mo → ⁹⁹ᵐTc (Mo-99: t₁/₂ = 66 h, Tc-99m: t₁/₂ = 6 h)
+                </div>
+                <div class="item">
+                    <div class="question">Condition:</div>
+                    <div class="answer">t₁/₂(parent) > t₁/₂(daughter), λ₁ < λ₂</div>
+                </div>
+                <div class="item">
+                    <div class="question">Daughter Activity:</div>
+                    <div class="answer formula">A₂(t) = (λ₂/(λ₂-λ₁)) × A₁₀ × (e^(-λ₁t) - e^(-λ₂t))</div>
+                </div>
+                <div class="item">
+                    <div class="question">At Maximum (t_max):</div>
+                    <div class="answer formula">t_max = ln(λ₂/λ₁)/(λ₂-λ₁)</div>
+                </div>
+                
+                <h3>Secular Equilibrium</h3>
+                <div class="highlight">
+                    <strong>Example:</strong> ²²⁶Ra → ²²²Rn (Ra-226: t₁/₂ = 1600 y, Rn-222: t₁/₂ = 3.8 d)
+                </div>
+                <div class="item">
+                    <div class="question">Condition:</div>
+                    <div class="answer">t₁/₂(parent) >> t₁/₂(daughter), λ₁ << λ₂</div>
+                </div>
+                <div class="item">
+                    <div class="question">At Equilibrium:</div>
+                    <div class="answer formula">A₁ = A₂ (Activities are equal)</div>
+                </div>
+                <div class="item">
+                    <div class="question">Daughter Activity:</div>
+                    <div class="answer formula">A₂(t) = A₁₀ × (1 - e^(-λ₂t))</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span>🌟 Photon Interactions</span>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <h3>Linear Attenuation Coefficients</h3>
+                <div class="item">
+                    <div class="question">Photoelectric Effect - Z and E dependence:</div>
+                    <div class="answer formula">τ ∝ Z⁴/E³ (dominant at low E, high Z)</div>
+                </div>
+                <div class="item">
+                    <div class="question">Compton Scattering - Z and E dependence:</div>
+                    <div class="answer formula">σ ∝ Z/E (dominant at intermediate E)</div>
+                </div>
+                <div class="item">
+                    <div class="question">Pair Production - Z and E dependence:</div>
+                    <div class="answer formula">κ ∝ Z² × E (E > 1.022 MeV, high E)</div>
+                </div>
+                <div class="item">
+                    <div class="question">Rayleigh Scattering - Z and E dependence:</div>
+                    <div class="answer formula">σ_rayleigh ∝ Z²/E² (low E, coherent)</div>
+                </div>
+                <div class="item">
+                    <div class="question">Total Linear Attenuation:</div>
+                    <div class="answer formula">μ = τ + σ + κ + σ_rayleigh</div>
+                </div>
+                
+                <h3>Mass Attenuation Coefficients</h3>
+                <div class="item">
+                    <div class="question">Mass Photoelectric Coefficient:</div>
+                    <div class="answer formula">(τ/ρ) ∝ Z⁴/(A·E³) (cm²/g)</div>
+                </div>
+                <div class="item">
+                    <div class="question">Mass Compton Coefficient:</div>
+                    <div class="answer formula">(σ/ρ) ∝ Z/(A·E) ≈ constant/E (cm²/g)</div>
+                </div>
+                <div class="item">
+                    <div class="question">Mass Pair Production Coefficient:</div>
+                    <div class="answer formula">(κ/ρ) ∝ Z²·E/A (cm²/g)</div>
+                </div>
+                <div class="item">
+                    <div class="question">Total Mass Attenuation:</div>
+                    <div class="answer formula">(μ/ρ) = (τ/ρ) + (σ/ρ) + (κ/ρ) + (σ_rayleigh/ρ)</div>
+                </div>
+                <div class="item">
+                    <div class="question">Relationship to Linear Coefficient:</div>
+                    <div class="answer formula">μ = (μ/ρ) × ρ</div>
+                </div>
+                
+                <h3>Key Formulas</h3>
+                <div class="item">
+                    <div class="question">Compton Scattered Photon Energy:</div>
+                    <div class="answer formula">E' = E₀/(1 + α(1 - cosθ))</div>
+                </div>
+                <div class="item">
+                    <div class="question">Compton Electron Energy:</div>
+                    <div class="answer formula">E_e = E₀ × [α(1 - cosθ)/(1 + α(1 - cosθ))]</div>
+                </div>
+                <div class="item">
+                    <div class="question">Where α =</div>
+                    <div class="answer">E₀/(m_e c²) = E₀/0.511 MeV</div>
+                </div>
+                <div class="item">
+                    <div class="question">Klein-Nishina Formula (Compton):</div>
+                    <div class="answer formula">dσ/dΩ = r₀²/2 × (E'/E₀)² × [E₀/E' + E'/E₀ - sin²θ]</div>
+                </div>
+                
+                <h3>Critical Energies (approximate)</h3>
+                <div class="item">
+                    <div class="question">Photoelectric = Compton:</div>
+                    <div class="answer">~Z/50 MeV (varies with material)</div>
+                </div>
+                <div class="item">
+                    <div class="question">Compton = Pair Production:</div>
+                    <div class="answer">~Z/15 MeV (varies with material)</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span>⚡ Charged Particle Interactions</span>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <h3>Electrons</h3>
+                <div class="item">
+                    <div class="question">Collision (Ionization) Losses:</div>
+                    <div class="answer formula">dE/dx ∝ Z/E (dominant at low E)</div>
+                </div>
+                <div class="item">
+                    <div class="question">Radiative (Bremsstrahlung) Losses:</div>
+                    <div class="answer formula">dE/dx ∝ Z² × E (dominant at high E)</div>
+                </div>
+                <div class="item">
+                    <div class="question">Critical Energy (E_c):</div>
+                    <div class="answer formula">E_c ≈ 800 MeV/Z (where collision = radiative)</div>
+                </div>
+                <div class="item">
+                    <div class="question">Range in g/cm²:</div>
+                    <div class="answer formula">R ≈ E/2 (for E in MeV, approximate)</div>
+                </div>
+                
+                <h3>Heavy Charged Particles</h3>
+                <div class="item">
+                    <div class="question">Bethe-Bloch Formula:</div>
+                    <div class="answer formula">dE/dx ∝ z²Z/β² (z = particle charge, Z = medium)</div>
+                </div>
+                <div class="item">
+                    <div class="question">Bragg Peak:</div>
+                    <div class="answer">Maximum energy deposition at end of range</div>
+                </div>
+                <div class="item">
+                    <div class="question">Range-Energy Relation:</div>
+                    <div class="answer formula">R = aE^n (a, n are constants)</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span>💊 Dosimetry Formulas</span>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="item">
+                    <div class="question">Exposure to Dose (in air):</div>
+                    <div class="answer formula">D_air = X × W_air = X × 33.97 J/C</div>
+                </div>
+                <div class="item">
+                    <div class="question">f-factor (tissue to air):</div>
+                    <div class="answer formula">D_tissue = D_air × f = D_air × 1.06</div>
+                </div>
+                <div class="item">
+                    <div class="question">Inverse Square Law:</div>
+                    <div class="answer formula">I₂/I₁ = (r₁/r₂)²</div>
+                </div>
+                <div class="item">
+                    <div class="question">Exponential Attenuation:</div>
+                    <div class="answer formula">I = I₀e^(-μx) = I₀e^(-x/HVL × ln2)</div>
+                </div>
+                <div class="item">
+                    <div class="question">Half Value Layer (HVL):</div>
+                    <div class="answer formula">HVL = ln(2)/μ = 0.693/μ</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let quizMode = false;
+        
+        function toggleSection(header) {
+            const section = header.parentElement;
+            section.classList.toggle('active');
+        }
+        
+        function toggleQuizMode() {
+            quizMode = !quizMode;
+            const answers = document.querySelectorAll('.answer');
+            
+            answers.forEach(answer => {
+                if (quizMode) {
+                    answer.classList.add('hidden');
+                } else {
+                    answer.classList.remove('hidden');
+                }
+            });
+            
+            const btn = event.target;
+            btn.textContent = quizMode ? 'Exit Quiz Mode' : 'Toggle Quiz Mode';
+        }
+        
+        function showAllAnswers() {
+            const answers = document.querySelectorAll('.answer');
+            answers.forEach(answer => {
+                answer.classList.remove('hidden');
+            });
+            quizMode = false;
+            document.querySelector('.quiz-btn').textContent = 'Toggle Quiz Mode';
+        }
+        
+        function hideAllAnswers() {
+            const answers = document.querySelectorAll('.answer');
+            answers.forEach(answer => {
+                answer.classList.add('hidden');
+            });
+            quizMode = true;
+            document.querySelector('.quiz-btn').textContent = 'Exit Quiz Mode';
+        }
+        
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('answer') && e.target.classList.contains('hidden')) {
+                e.target.classList.remove('hidden');
+            }
+        });
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const sections = document.querySelectorAll('.section');
+            sections.forEach((section, index) => {
+                if (index === 0) {
+                    section.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
